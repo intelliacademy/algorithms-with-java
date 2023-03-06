@@ -1,11 +1,10 @@
-package az.rock.lesson;
+package az.rock.lesson.util;
 
-import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
-public abstract class AbstractTimeMetric<T> implements Sort<T>{
+public abstract class AbstractTimeMetric<T extends Comparable<T>> implements Sort<T>{
 
     public List<T> sortAsMetric(List<T> list){
         var startInstant = Instant.now();

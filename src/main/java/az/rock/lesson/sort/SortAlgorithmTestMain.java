@@ -1,28 +1,24 @@
-package az.rock.lesson.sort.selection;
+package az.rock.lesson.sort;
 
-import az.rock.csv4j.exception.CSVHeaderNotFoundException;
-import az.rock.csv4j.exception.ElementManyAnnotatedException;
-import az.rock.csv4j.manager.CSVManager;
+import az.rock.lesson.sort.insertion.InsertionSort;
+import az.rock.lesson.util.PersonDataProvider;
 import az.rock.lesson.model.Person;
+import az.rock.lesson.sort.selection.SelectionSort;
 
 import java.util.List;
 
-public class SelectionSortTestMain {
+public class SortAlgorithmTestMain {
+
+    static List<Person> personList = PersonDataProvider.provide();
 
     public static void main(String[] args) {
         SelectionSort<Person> selectionSort = new SelectionSort<>();
-        CSVManager<Person> csvManager;
-        List<Person> personList;
-        try {
-            csvManager = new CSVManager<>(Person.class,"MOCK_DATA.csv");
-            personList = csvManager.load();
-        } catch (CSVHeaderNotFoundException | ElementManyAnnotatedException e) {
-            throw new RuntimeException(e);
-        }
+
+        //InsertionSort<Person> insertionSort = new InsertionSort<>();
 
         List<Person> sortedList = selectionSort.sortAsMetric(personList);
+
+
         sortedList.forEach(System.out::println);
-
-
     }
 }
