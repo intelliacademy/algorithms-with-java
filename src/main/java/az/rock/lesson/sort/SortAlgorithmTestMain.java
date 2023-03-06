@@ -19,6 +19,6 @@ public class SortAlgorithmTestMain {
         List<Person> sortedList = selectionSort.sortAsMetric(personList);
 
 
-        sortedList.forEach(System.out::println);
+        sortedList.forEach(e->System.out.println(e.getId() + "  " + e.getSalary()));
     }
 }

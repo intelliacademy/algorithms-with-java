@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @CSVModel
-public class Person implements Comparable<Person>  {
+public class Person implements Comparable<Person> ,Cloneable {
 
     @CSVColumn(name = "id",type = ColumnType.GUID)
     private UUID id;
@@ -35,6 +35,9 @@ public class Person implements Comparable<Person>  {
     @CSVColumn(name = "address")
     private String address;
 
+    @CSVColumn(name = "salary")
+    private String salary;
+
 
     @Override
     public String toString() {
@@ -42,6 +45,7 @@ public class Person implements Comparable<Person>  {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", address='" + salary + '\'' +
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +
@@ -50,18 +54,6 @@ public class Person implements Comparable<Person>  {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return id.equals(person.id) && firstName.equals(person.firstName) && lastName.equals(person.lastName) && Objects.equals(birthday, person.birthday) && Objects.equals(email, person.email) && Objects.equals(gender, person.gender) && Objects.equals(city, person.city) && Objects.equals(address, person.address);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, birthday, email, gender, city, address);
-    }
 
     public UUID getId() {
         return id;
@@ -90,6 +82,11 @@ public class Person implements Comparable<Person>  {
     public Date getBirthday() {
         return birthday;
     }
+
+    public String getSalary() {
+        return salary;
+    }
+
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
@@ -130,8 +127,37 @@ public class Person implements Comparable<Person>  {
 
     @Override
     public int compareTo(Person o) {
-        return this.birthday.compareTo(o.birthday);
+        return Integer.valueOf(this.salary).compareTo(Integer.valueOf(o.salary));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id.equals(person.id) && firstName.equals(person.firstName) && lastName.equals(person.lastName) && Objects.equals(birthday, person.birthday) && Objects.equals(email, person.email) && Objects.equals(gender, person.gender) && Objects.equals(city, person.city) && Objects.equals(address, person.address) && Objects.equals(salary, person.salary);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, birthday, email, gender, city, address, salary);
+    }
+
+    @Override
+    public Person clone() {
+            return Person.Builder
+                    .builder()
+                    .id(this.id)
+                    .firstName(this.firstName)
+                    .lastName(this.lastName)
+                    .birthday(this.birthday)
+                    .salary(this.salary)
+                    .birthday(this.birthday)
+                    .city(this.city)
+                    .address(this.address)
+                    .build();
+    }
+
 
     public static final class Builder {
         private UUID id;
@@ -142,11 +168,12 @@ public class Person implements Comparable<Person>  {
         private String gender;
         private String city;
         private String address;
+        private String salary;
 
         private Builder() {
         }
 
-        public static Builder aPerson() {
+        public static Builder builder() {
             return new Builder();
         }
 
@@ -190,6 +217,11 @@ public class Person implements Comparable<Person>  {
             return this;
         }
 
+        public Builder salary(String salary) {
+            this.salary = salary;
+            return this;
+        }
+
         public Person build() {
             Person person = new Person();
             person.setId(id);
@@ -200,6 +232,7 @@ public class Person implements Comparable<Person>  {
             person.setGender(gender);
             person.setCity(city);
             person.setAddress(address);
+            person.salary = this.salary;
             return person;
         }
     }
