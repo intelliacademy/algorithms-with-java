@@ -17,7 +17,7 @@ public class SelectionSort<T extends  Cloneable & Comparable<T> > extends Abstra
                 .forEach(index->{
                     this.min = list.get(index);
                     IntStream.range(index,list.size()).forEach(jIndex->{
-                        if (list.get(jIndex).compareTo(this.min) > 0){
+                        if (list.get(jIndex).compareTo(this.min) < 0){
                             this.min = list.get(jIndex);
                         }
                     });
