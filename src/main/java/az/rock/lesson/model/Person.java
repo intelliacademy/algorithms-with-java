@@ -45,7 +45,7 @@ public class Person implements Comparable<Person> ,Cloneable {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", address='" + salary + '\'' +
+                ", salary='" + salary + '\'' +
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +

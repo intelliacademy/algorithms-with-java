@@ -3,25 +3,24 @@ package az.rock.lesson.sort.selection;
 import az.rock.lesson.util.AbstractTimeMetric;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class SelectionSort<T extends  Cloneable & Comparable<T> > extends AbstractTimeMetric<T> {
 
-
-    private T template;
     private T min;
 
     @Override
     public List<T> sort(List<T> list) {
-        for (var i = 0;i < list.size() - 1; i++){
-            this.min = list.get(i);
-            for (var j = i; j < list.size(); j++){
-                if (list.get(j).compareTo((this.min)) < 0)
-                    this.min = list.get(j);
+        IntStream.range(0,list.size() - 1).forEach(iIndex->{
+                    this.min = list.get(iIndex);
+                    IntStream.range(iIndex,list.size()).forEach(jIndex->{
+                        if (list.get(jIndex).compareTo(this.min) < 0)
+                            this.min = list.get(jIndex);
+                    });
+                    list.set(list.indexOf(this.min),list.get(iIndex));
+                    list.set(iIndex,this.min);
             }
-            this.template = list.get(i);
-            list.set(list.indexOf(this.min),list.get(i));
-            list.set(i,this.min);
-        }
+        );
         return list;
     }
 
