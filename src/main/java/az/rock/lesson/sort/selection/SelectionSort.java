@@ -3,7 +3,6 @@ package az.rock.lesson.sort.selection;
 import az.rock.lesson.util.AbstractTimeMetric;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class SelectionSort<T extends  Cloneable & Comparable<T> > extends AbstractTimeMetric<T> {
 
@@ -13,19 +12,16 @@ public class SelectionSort<T extends  Cloneable & Comparable<T> > extends Abstra
 
     @Override
     public List<T> sort(List<T> list) {
-        IntStream.range(0,list.size())
-                .forEach(index->{
-                    this.min = list.get(index);
-                    IntStream.range(index,list.size()).forEach(jIndex->{
-                        if (list.get(jIndex).compareTo(this.min) < 0){
-                            this.min = list.get(jIndex);
-                        }
-                    });
-                    this.template = list.get(index);
-                    var minIndex = list.indexOf(this.min);
-                    list.add(index,this.min);
-                    list.add(minIndex,this.template);
-                });
+        for (var i = 0;i < list.size() - 1; i++){
+            this.min = list.get(i);
+            for (var j = i; j < list.size(); j++){
+                if (list.get(j).compareTo((this.min)) < 0)
+                    this.min = list.get(j);
+            }
+            this.template = list.get(i);
+            list.set(list.indexOf(this.min),list.get(i));
+            list.set(i,this.min);
+        }
         return list;
     }
 
