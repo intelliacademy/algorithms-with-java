@@ -1,4 +1,4 @@
-package az.rock.lesson.sort.selection;
+package az.rock.lesson.sort;
 
 import az.rock.lesson.util.AbstractTimeMetric;
 
