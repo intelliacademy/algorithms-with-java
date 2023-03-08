@@ -12,13 +12,10 @@ public class SortAlgorithmTestMain {
     static List<Person> personList = PersonDataProvider.provide();
 
     public static void main(String[] args) {
-        SelectionSort<Person> selectionSort = new SelectionSort<>();
+        //SelectionSort<Person> algorithm = new SelectionSort<>();
+        InsertionSort<Person> algorithm = new InsertionSort<>();
 
-        //InsertionSort<Person> insertionSort = new InsertionSort<>();
-
-        List<Person> sortedList = selectionSort.sortAsMetric(personList);
-
-
-        sortedList.forEach(e->System.out.println(e.toString()));
+        List<Person> sortedList = algorithm.sortAsMetric(personList);
+        sortedList.forEach(e->System.out.println(e.getFirstName() + " " + e.getSalary()));
     }
 }
