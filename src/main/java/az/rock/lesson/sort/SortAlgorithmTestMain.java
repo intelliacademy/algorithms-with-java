@@ -1,21 +1,19 @@
 package az.rock.lesson.sort;
 
-import az.rock.lesson.sort.insertion.InsertionSort;
+import az.rock.lesson.sort.buble.BubbleSort;
+import az.rock.lesson.util.AbstractTimeMetric;
 import az.rock.lesson.util.PersonDataProvider;
 import az.rock.lesson.model.Person;
-import az.rock.lesson.sort.selection.SelectionSort;
 
 import java.util.List;
 
 public class SortAlgorithmTestMain {
 
-    static List<Person> personList = PersonDataProvider.provide();
+    static List<Person> unsortedPersonList = PersonDataProvider.provide();
+    static AbstractTimeMetric<Person> algorithm = new BubbleSort<>();
 
     public static void main(String[] args) {
-        //SelectionSort<Person> algorithm = new SelectionSort<>();
-        InsertionSort<Person> algorithm = new InsertionSort<>();
-
-        List<Person> sortedList = algorithm.sortAsMetric(personList);
+        List<Person> sortedList = algorithm.sortAsMetric(unsortedPersonList);
         sortedList.forEach(e->System.out.println(e.getFirstName() + " " + e.getSalary()));
     }
 }
