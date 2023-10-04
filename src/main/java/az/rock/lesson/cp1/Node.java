@@ -1,5 +1,7 @@
 package az.rock.lesson.cp1;
 
+import java.util.function.Consumer;
+
 public class Node <D>{
     private D data;
     private Node<D> next;
@@ -35,6 +37,15 @@ public class Node <D>{
 
     public Boolean hasPrevious() {
         return previous != null;
+    }
+
+    public Node<D> iterate(Consumer<D> consumer){
+        if (this.hasNext()) {
+            var node = this.getNext().iterate(consumer);
+            consumer.accept(node.getData());
+            return node;
+        }
+        else return this;
     }
 
     public void addNext(Node<D> next) {

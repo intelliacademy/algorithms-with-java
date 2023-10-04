@@ -4,14 +4,18 @@ import az.rock.lesson.model.Person;
 import az.rock.lesson.util.PersonDataProvider;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class LinkedListChapter {
     public static void main(String[] args) {
-        Node<Person> node1 = Node.of();
+        NodeList<Person> personNodeList = new NodeList<>();
 
         PersonDataProvider.provide().forEach(item->{
-            node1.addNext(item);
+            personNodeList.add(item);
         });
-        System.out.println();
+
+        Consumer<Person> personConsumer = System.out::print;
+        personNodeList.forEach(personConsumer);
+
     }
 }
