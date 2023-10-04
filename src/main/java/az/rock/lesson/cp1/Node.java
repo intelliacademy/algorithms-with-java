@@ -1,6 +1,7 @@
 package az.rock.lesson.cp1;
 
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class Node <D>{
     private D data;
@@ -13,6 +14,14 @@ public class Node <D>{
 
     public Node(D data) {
         this.data = data;
+    }
+
+    public void changeNextNode(Node<D> next){
+        this.next = next;
+    }
+
+    public void changePrevious(Node<D> previous){
+        this.previous = previous;
     }
 
     public D getData() {
@@ -48,6 +57,17 @@ public class Node <D>{
         else return this;
     }
 
+    public Node<D> iterateOnNodes(Consumer<Node<D>> consumer){
+        if (this.hasNext()) {
+            var node = this.getNext().iterateOnNodes(consumer);
+            consumer.accept(node);
+            return node;
+        }
+        else return this;
+    }
+
+
+
     public void addNext(Node<D> next) {
         if (this.next == null) {
             this.next = next;
@@ -57,10 +77,14 @@ public class Node <D>{
 
     public void addNext(D data) {
         var next = new Node<>(data);
-        if (this.next == null) {
-            this.next = next;
-            next.previous = this;
-        } else this.next.addNext(next);
+        this.addNext(next);
+    }
+
+    public void remove(){
+        var prevNode = this.getPrevious();
+        var nextNode = this.getNext();
+        prevNode.changeNextNode(nextNode);
+        nextNode.changePrevious(prevNode);
     }
 
     public void displayNode() {
