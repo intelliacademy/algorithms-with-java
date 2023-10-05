@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 public class Stack <D>{
-    private StackNode<D> head;
+    private StackFrame<D> head;
 
     private final AtomicInteger size = new AtomicInteger(0);
 
@@ -32,7 +32,7 @@ public class Stack <D>{
     }
 
     public void push(D data){
-        this.head = new StackNode<>(data, this.head);
+        this.head = new StackFrame<>(data, this.head);
         this.incrementSize();
     }
 

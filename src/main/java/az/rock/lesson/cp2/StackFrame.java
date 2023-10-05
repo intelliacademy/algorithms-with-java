@@ -1,19 +1,18 @@
 package az.rock.lesson.cp2;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-public class StackNode<D> {
+public class StackFrame<D> {
     private D data;
 
-    private StackNode<D> tail;
+    private StackFrame<D> tail;
 
-    public StackNode(D data){
+    public StackFrame(D data){
         this.data = data;
         this.tail = null;
     }
 
-    public StackNode(D data,StackNode<D> tail){
+    public StackFrame(D data, StackFrame<D> tail){
         this.data = data;
         this.tail = tail;
     }
@@ -22,7 +21,7 @@ public class StackNode<D> {
         return data;
     }
 
-    public StackNode<D> getTail() {
+    public StackFrame<D> getTail() {
         return tail;
     }
 
