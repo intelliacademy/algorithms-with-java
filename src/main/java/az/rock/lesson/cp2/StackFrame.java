@@ -24,8 +24,8 @@ public class StackFrame<D> {
         return tail;
     }
 
-    public void iterate(Consumer<D> consumer){
+    public void previous(Consumer<D> consumer){
         consumer.accept(this.data);
-        if (this.tail != null) this.tail.iterate(consumer);
+        if (this.tail != null) this.tail.previous(consumer);
     }
 }

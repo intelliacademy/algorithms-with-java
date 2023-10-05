@@ -25,10 +25,12 @@ public class Stack <D>{
     }
 
     public D pop(){
-        var headData = this.head.getData();
-        this.head  = this.head.getTail();
-        this.decrementSize();
-        return headData;
+        if (this.head != null){
+            var headData = this.head.getData();
+            this.head  = this.head.getTail();
+            this.decrementSize();
+            return headData;
+        }else return null;
     }
 
     public void push(D data){
@@ -41,6 +43,6 @@ public class Stack <D>{
     }
 
     public void forEach(Consumer<D> consumer){
-        this.head.iterate(consumer);
+        this.head.previous(consumer);
     }
 }
