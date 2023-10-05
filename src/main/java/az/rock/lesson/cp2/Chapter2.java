@@ -22,6 +22,10 @@ public class Chapter2 {
         personStack.push("2");
         personStack.push("3");
         personStack.push("4");
+        personStack.pop();
+        personStack.pop();
+        personStack.pop();
+        personStack.pop();
         System.out.println(personStack);
     }
 }

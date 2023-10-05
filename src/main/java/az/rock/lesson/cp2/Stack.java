@@ -48,6 +48,7 @@ public class Stack <D>{
 
     @Override
     public String toString() {
-        return this.head.toString();
+        if (this.head != null) return this.head.toString();
+        else return "";
     }
 }
