@@ -24,6 +24,13 @@ public class Node <D>{
         this.previous = previous;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Node<?> node)
+            return node.data.equals(this);
+        return false;
+    }
+
     public D getData() {
         return data;
     }
@@ -83,8 +90,8 @@ public class Node <D>{
     public void remove(){
         var prevNode = this.getPrevious();
         var nextNode = this.getNext();
-        prevNode.changeNextNode(nextNode);
-        nextNode.changePrevious(prevNode);
+        if (prevNode != null) prevNode.changeNextNode(nextNode);
+        if (nextNode != null) nextNode.changePrevious(prevNode);
     }
 
     public void displayNode() {
