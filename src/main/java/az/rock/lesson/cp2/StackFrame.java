@@ -8,8 +8,7 @@ public class StackFrame<D> {
     private StackFrame<D> tail;
 
     public StackFrame(D data){
-        this.data = data;
-        this.tail = null;
+        this(data,null);
     }
 
     public StackFrame(D data, StackFrame<D> tail){
