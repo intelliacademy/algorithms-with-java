@@ -45,4 +45,9 @@ public class Stack <D>{
     public void forEach(Consumer<D> consumer){
         this.head.previous(consumer);
     }
+
+    @Override
+    public String toString() {
+        return this.head.toString();
+    }
 }
