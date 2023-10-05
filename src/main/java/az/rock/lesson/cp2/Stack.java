@@ -3,7 +3,7 @@ package az.rock.lesson.cp2;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-public class Stack <D>{
+public class Stack <D extends Comparable<D>>{
     private StackFrame<D> head;
 
     private final AtomicInteger size = new AtomicInteger(0);
@@ -24,7 +24,7 @@ public class Stack <D>{
         this.size.decrementAndGet();
     }
 
-    public D pop(){
+    public  D pop(){
         if (this.head != null){
             var headData = this.head.getData();
             this.head  = this.head.getTail();
