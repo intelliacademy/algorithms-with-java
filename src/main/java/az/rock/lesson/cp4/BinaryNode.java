@@ -25,7 +25,7 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
         }else if (right.isEmpty()){
             right = new BinaryNode<>(element);
         }else {
-            if (this.left.compareTo(this.right) < 0) left.add(element);
+            if (element.compareTo(this.element) < 0) left.add(element);
             else right.add(element);
         }
     }
