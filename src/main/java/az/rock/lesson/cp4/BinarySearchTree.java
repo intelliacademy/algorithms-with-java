@@ -19,8 +19,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
         }
     }
 
-    public Boolean contains(T element){
-        return root.contains(element);
+    public T contains(T element){
+        return root.contains(element).getElement();
     }
 
     @Override

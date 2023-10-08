@@ -7,6 +7,11 @@ public class EmptyNode extends BinaryNode{
         super(element);
     }
 
+    @Override
+    public Comparable remove(Comparable element) {
+        return null;
+    }
+
     private static EmptyNode INSTANCE = new EmptyNode(null);
 
     public static <T,S extends Comparable<T>> EmptyNode getInstance(){

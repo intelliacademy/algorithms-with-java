@@ -5,6 +5,10 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
     private BinaryNode<T> left;
     private BinaryNode<T> right;
 
+    public T getElement() {
+        return element;
+    }
+
     public BinaryNode(T element){
         this(element, EmptyNode.getInstance(), EmptyNode.getInstance());
     }
@@ -28,6 +32,10 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
             if (element.compareTo(this.element) <= 0) left.add(element);
             else right.add(element);
         }
+    }
+
+    public T remove(T element){
+        return this.contains(element).remove(element);
     }
 
     public boolean isLeaf(){
@@ -122,12 +130,12 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
         }
     }
 
-    public Boolean contains(T element){
+    public BinaryNode<T> contains(T element){
         if (isEmpty()){
-            return false;
+            return this;
         }
         if (this.element.equals(element)){
-            return true;
+            return this;
         }else {
             if (element.compareTo(this.element) <= 0){
                 return left.contains(element);
