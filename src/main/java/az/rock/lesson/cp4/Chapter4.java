@@ -12,6 +12,7 @@ public class Chapter4 {
         IntStream.rangeClosed(0,10).forEach(i->{
             tree.insert(list.get(i));
         });
-        System.out.println(tree);
+
+        System.out.println(tree.contains(list.get(3)));;
     }
 }

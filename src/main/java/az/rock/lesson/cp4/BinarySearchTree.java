@@ -7,10 +7,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
         root = null;
     }
 
-    public void makeEmpty(){
-        root = null;
-    }
-
     public boolean isEmpty(){
         return root == null;
     }
@@ -21,6 +17,10 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
         }else {
             root.add(element);
         }
+    }
+
+    public Boolean contains(T element){
+        return root.contains(element);
     }
 
     @Override

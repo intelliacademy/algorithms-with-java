@@ -30,10 +30,6 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
         }
     }
 
-    public T getElement() {
-        return element;
-    }
-
     public boolean isLeaf(){
         return left.isEmpty() && right.isEmpty();
     }
@@ -46,24 +42,8 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
         return !(right.isEmpty());
     }
 
-    public BinaryNode<T> getLeft() {
-        return left;
-    }
-
-    public BinaryNode<T> getRight() {
-        return right;
-    }
-
     public Boolean isFull(){
         return hasLeft() && hasRight();
-    }
-
-    public int height(){
-        if (isLeaf()){
-            return 0;
-        }else {
-            return 1 + Math.max(left.height(),right.height());
-        }
     }
 
     public int size(){
@@ -143,17 +123,16 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
     }
 
     public Boolean contains(T element){
+        if (isEmpty()){
+            return false;
+        }
         if (this.element.equals(element)){
             return true;
         }else {
-            if (hasLeft() && hasRight()){
-                return left.contains(element) || right.contains(element);
-            }else if (hasLeft() && !hasRight()){
+            if (element.compareTo(this.element) <= 0){
                 return left.contains(element);
-            }else if (!hasLeft() && hasRight()){
-                return right.contains(element);
             }else {
-                return false;
+                return right.contains(element);
             }
         }
     }
