@@ -42,16 +42,8 @@ public class Person implements Comparable<Person> ,Cloneable {
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
                 ", salary='" + salary + '\'' +
-                ", birthday=" + birthday +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", city='" + city + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+                "}\n";
     }
 
 
