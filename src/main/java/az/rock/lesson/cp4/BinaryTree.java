@@ -15,7 +15,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
         if (isEmpty()){
             root = new BinaryNode<>(element);
         }else {
-            root.add(element);
+            root.add(element,this.root);
         }
     }
 
