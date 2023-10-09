@@ -1,6 +1,6 @@
 package az.rock.lesson.cp4;
 
-public class EmptyNode extends BinaryNode{
+public final class EmptyNode extends BinaryNode{
 
 
     private EmptyNode(Comparable<?> element) {

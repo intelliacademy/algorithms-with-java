@@ -1,6 +1,6 @@
 package az.rock.lesson.cp4;
 
-public class BinaryNode <T extends Comparable<? super T>> implements Comparable<BinaryNode<T>>{
+public sealed class BinaryNode <T extends Comparable<? super T>> implements Comparable<BinaryNode<T>> permits EmptyNode{
     private T element;
 
     private BinaryNode<T> parent;
