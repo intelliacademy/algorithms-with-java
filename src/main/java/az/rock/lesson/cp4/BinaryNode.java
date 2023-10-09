@@ -161,9 +161,9 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
 
     public String toString(){
         if (isLeaf()){
-            return element.toString();
+            return "ROOT : " + element.toString();
         }else {
-            return element.toString() + " LEFT : " + left.toString() + " RIGHT : " + right.toString();
+            return element.toString() +"\n \t "+ " <= LEFT : " + left.toString()+ "\n \t " + " => RIGHT : " + right.toString();
         }
     }
 

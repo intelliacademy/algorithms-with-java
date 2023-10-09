@@ -42,10 +42,10 @@ public class Person implements Comparable<Person> ,Cloneable {
     @Override
     public String toString() {
         return "Person{" +
+                "id=" + id +
                 ", salary='" + salary + '\'' +
                 "}\n";
     }
-
 
     public UUID getId() {
         return id;

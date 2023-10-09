@@ -13,6 +13,6 @@ public class Chapter4 {
             tree.insert(list.get(i));
         });
 
-        System.out.println(tree.contains(list.get(3)));;
+        System.out.println(tree);;
     }
 }

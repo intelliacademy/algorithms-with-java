@@ -24,10 +24,6 @@ public class EmptyNode extends BinaryNode{
         return ROOT_INSTANCE;
     }
 
-    @Override
-    public void add(Comparable element) {
-
-    }
 
     @Override
     public Boolean isEmpty() {
@@ -41,6 +37,6 @@ public class EmptyNode extends BinaryNode{
 
     @Override
     public String toString() {
-        return "";
+        return "EMPTY";
     }
 }
