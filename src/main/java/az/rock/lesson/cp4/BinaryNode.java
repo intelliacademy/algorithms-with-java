@@ -31,7 +31,7 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
     }
 
     public Boolean isEmpty(){
-        return this instanceof EmptyNode;
+        return Boolean.FALSE;
     }
 
     public void add(T element){

@@ -30,6 +30,11 @@ public class EmptyNode extends BinaryNode{
     }
 
     @Override
+    public Boolean isEmpty() {
+        return Boolean.TRUE;
+    }
+
+    @Override
     public int compareTo(BinaryNode o) {
         return -1;
     }
