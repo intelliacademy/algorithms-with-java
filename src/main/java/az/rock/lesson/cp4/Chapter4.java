@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class Chapter4 {
     public static void main(String[] args) {
-        BinarySearchTree<Person> tree = new BinarySearchTree<>();
+        BinaryTree<Person> tree = new BinaryTree<>();
         var list = PersonDataProvider.provide();
         IntStream.rangeClosed(0,10).forEach(i->{
             tree.insert(list.get(i));

@@ -1,9 +1,9 @@
 package az.rock.lesson.cp4;
 
-public class BinarySearchTree<T extends Comparable<? super T>> {
+public class BinaryTree<T extends Comparable<? super T>> {
     private BinaryNode<T> root;
 
-    public BinarySearchTree(){
+    public BinaryTree(){
         root = null;
     }
 

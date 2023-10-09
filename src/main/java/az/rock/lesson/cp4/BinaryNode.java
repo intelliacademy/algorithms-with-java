@@ -2,11 +2,18 @@ package az.rock.lesson.cp4;
 
 public class BinaryNode <T extends Comparable<? super T>> implements Comparable<BinaryNode<T>>{
     private T element;
+
+    private BinaryNode<T> parent;
     private BinaryNode<T> left;
     private BinaryNode<T> right;
 
     public T getElement() {
         return element;
+    }
+
+    public BinaryNode(BinaryNode<T> parent,T element){
+        this(element, EmptyNode.getInstance(parent), EmptyNode.getInstance(parent));
+        this.parent = parent;
     }
 
     public BinaryNode(T element){
@@ -19,15 +26,19 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
         this.right = right;
     }
 
+    public void setParent(BinaryNode<T> parent) {
+        this.parent = parent;
+    }
+
     public Boolean isEmpty(){
         return this instanceof EmptyNode;
     }
 
     public void add(T element){
         if (left.isEmpty() && element.compareTo(this.element) <= 0){
-            left = new BinaryNode<>(element);
+            left = new BinaryNode<>(this,element);
         }else if (right.isEmpty() && element.compareTo(this.element) > 0){
-            right = new BinaryNode<>(element);
+            right = new BinaryNode<>(this,element);
         }else {
             if (element.compareTo(this.element) <= 0) left.add(element);
             else right.add(element);
@@ -35,7 +46,10 @@ public class BinaryNode <T extends Comparable<? super T>> implements Comparable<
     }
 
     public T remove(T element){
-        return this.contains(element).remove(element);
+        var target =  this.contains(element).remove(element);
+
+
+        return target;
     }
 
     public boolean isLeaf(){

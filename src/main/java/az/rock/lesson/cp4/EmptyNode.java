@@ -13,9 +13,15 @@ public class EmptyNode extends BinaryNode{
     }
 
     private static EmptyNode INSTANCE = new EmptyNode(null);
+    private static EmptyNode ROOT_INSTANCE = new EmptyNode(null);
+
+    public static <T,S extends Comparable<T>> EmptyNode getInstance(BinaryNode parent){
+        INSTANCE.setParent(parent);
+        return INSTANCE;
+    }
 
     public static <T,S extends Comparable<T>> EmptyNode getInstance(){
-        return INSTANCE;
+        return ROOT_INSTANCE;
     }
 
     @Override
