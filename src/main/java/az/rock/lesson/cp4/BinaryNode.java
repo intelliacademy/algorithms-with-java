@@ -45,6 +45,33 @@ public sealed class BinaryNode <T extends Comparable<? super T>> implements Comp
         }
     }
 
+    public void traverseInOrder(){
+        if (isEmpty()){
+            return;
+        }
+        left.traverseInOrder();
+        System.out.println(element);
+        right.traverseInOrder();
+    }
+
+    public void traversePreOrder(){
+        if (isEmpty()){
+            return;
+        }
+        System.out.println(element);
+        left.traversePreOrder();
+        right.traversePreOrder();
+    }
+
+    public void traversePostOrder(){
+        if (isEmpty()){
+            return;
+        }
+        left.traversePostOrder();
+        right.traversePostOrder();
+        System.out.println(element);
+    }
+
     public T remove(T element){
         var target =  this.contains(element).remove(element);
 
