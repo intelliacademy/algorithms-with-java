@@ -72,11 +72,76 @@ public sealed class BinaryNode <T extends Comparable<? super T>> implements Comp
         System.out.println(element);
     }
 
-    public T remove(T element){
-        var target =  this.contains(element).remove(element);
+    public T remove(T element,BinaryNode<T> node){
+        if (node == null) return null;
+        if (element.compareTo(node.getElement()) < 0) {
+            return remove(element, node.left);
+        }else if (element.compareTo(node.getElement()) > 0) {
+            return remove(element, node.right);
+        }else {
+            if (node.isLeaf()){
+                if (node.parent.left == node){
+                    node.parent.left = EmptyNode.getInstance();
+                }else {
+                    node.parent.right = EmptyNode.getInstance();
+                }
+                return node.getElement();
+            }else {
+                if (node.hasOnlyLeft()){
+                    if (node.parent.left == node){
+                        node.parent.left = node.left;
+                    }else {
+                        node.parent.right = node.left;
+                    }
+                    return node.getElement();
+                }else if (node.hasOnlyRight()){
+                    if (node.parent.left == node){
+                        node.parent.left = node.right;
+                    }else {
+                        node.parent.right = node.right;
+                    }
+                    return node.getElement();
+                }else {
+                    BinaryNode<T> min = node.right.findMin();
+                    T temp = node.getElement();
+                    node.element = min.getElement();
+                    min.element = temp;
+                    return remove(element, node.right);
+                }
+            }
+        }
+    }
 
+    public BinaryNode<T> findMin(){
+        if (isEmpty()){
+            return null;
+        }else {
+            if (left.isEmpty()){
+                return this;
+            }else {
+                return left.findMin();
+            }
+        }
+    }
 
-        return target;
+    public BinaryNode<T> findMax(){
+        if (isEmpty()){
+            return null;
+        }else {
+            if (right.isEmpty()){
+                return this;
+            }else {
+                return right.findMax();
+            }
+        }
+    }
+
+    private Boolean hasOnlyLeft(){
+        return hasLeft() && !hasRight();
+    }
+
+    private Boolean hasOnlyRight(){
+        return !hasLeft() && hasRight();
     }
 
     public boolean isLeaf(){

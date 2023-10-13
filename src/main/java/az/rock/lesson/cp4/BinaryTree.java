@@ -23,6 +23,11 @@ public class BinaryTree<T extends Comparable<? super T>> {
         return root.contains(element).getElement();
     }
 
+    public T remove(T element){
+        if (this.isEmpty()) return null;
+        return root.remove(element,this.root);
+    }
+
     @Override
     public String toString() {
         return this.root.toString();
