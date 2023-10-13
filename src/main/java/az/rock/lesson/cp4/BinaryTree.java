@@ -19,6 +19,10 @@ public class BinaryTree<T extends Comparable<? super T>> {
         }
     }
 
+    public boolean compare(BinaryTree<T> other){
+        return root.compare(other.root);
+    }
+
     public T contains(T element){
         return root.contains(element).getElement();
     }

@@ -26,6 +26,16 @@ public sealed class BinaryNode <T extends Comparable<? super T>> implements Comp
         this.right = right;
     }
 
+    public Boolean compare(BinaryNode<T> other){
+        if (this.isEmpty() && other.isEmpty()){
+            return Boolean.TRUE;
+        }else if (this.isEmpty() || other.isEmpty()){
+            return Boolean.FALSE;
+        }else {
+            return this.element.compareTo(other.element) == 0 && this.left.compare(other.left) && this.right.compare(other.right);
+        }
+    }
+
     public void setParent(BinaryNode<T> parent) {
         this.parent = parent;
     }
