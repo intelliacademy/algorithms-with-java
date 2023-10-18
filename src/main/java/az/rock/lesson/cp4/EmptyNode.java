@@ -7,7 +7,6 @@ public final class EmptyNode extends BinaryNode{
         super(element);
     }
 
-    @Override
     public Comparable remove(Comparable element) {
         return null;
     }
