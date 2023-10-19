@@ -1,7 +1,11 @@
 package az.rock.lesson.cp5;
 
+import java.util.function.Consumer;
+
 public class AVLNode<T extends Comparable<T>> implements Node<T>{
     public T data;
+    public AVLNode<T> parent;
+
     public AVLNode<T> left;
     public AVLNode<T> right;
     public int height;
@@ -11,21 +15,29 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
         this.height = 0;
     }
 
+    public AVLNode(T data, AVLNode<T> parent) {
+        this.data = data;
+        this.height = 0;
+        this.parent = parent;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 
     @Override
     public void insert(T data) {
-        var node = new AVLNode<>(data);
         if (data.compareTo(this.data) < 0) {
-            if (left == null) {
-                left = node;
+            if (!this.hasLeftChild()) {
+                this.left = new AVLNode<>(data, this);
             } else {
-                left.insert(data);
+                this.left.insert(data);
             }
         } else {
-            if (right == null) {
-                right = node;
+            if (!this.hasRightChild()) {
+                this.right = new AVLNode<>(data,this);
             } else {
-                right.insert(data);
+                this.right.insert(data);
             }
         }
     }
@@ -33,60 +45,69 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
     @Override
     public void remove(T data) {
         if (data.compareTo(this.data) < 0) {
-            if (left != null) {
-                left.remove(data);
+            if (this.left != null) {
+                this.left.remove(data);
             }
         } else if (data.compareTo(this.data) > 0) {
-            if (right != null) {
-                right.remove(data);
+            if (this.right != null) {
+                this.right.remove(data);
             }
         } else {
-            if (this.isLeaf()) {
-                this.data = null;
-            } else if (this.hasLeftChild()) {
-                var predecessor = left.getMaxValue();
-                this.data = predecessor;
-                left.remove(predecessor);
-            } else {
-                var successor = right.getMinValue();
-                this.data = successor;
-                right.remove(successor);
+            if (this.left != null && this.right != null) {
+                this.data = this.right.getMinValue();
+                this.right.remove(this.data);
+            } else if (this.parent == null) {
+                if (this.left != null) {
+                    this.data = this.left.data;
+                    this.right = this.left.right;
+                    this.left = this.left.left;
+                } else if (this.right != null) {
+                    this.data = this.right.data;
+                    this.left = this.right.left;
+                    this.right = this.right.right;
+                } else {
+                    this.data = null;
+                }
+            } else if (this.parent.left == this) {
+                this.parent.left = this.left != null ? this.left : this.right;
+            } else if (this.parent.right == this) {
+                this.parent.right = this.left != null ? this.left : this.right;
             }
         }
     }
 
     @Override
-    public void traversal() {
-        if (left != null) {
-            left.traversal();
+    public void traversal(Consumer<T> consumer){
+        if (this.left != null) {
+            this.left.traversal(consumer);
         }
-        System.out.println(data);
-        if (right != null) {
-            right.traversal();
+        consumer.accept(this.data);
+        if (this.right != null) {
+            this.right.traversal(consumer);
         }
     }
 
     @Override
     public T getMaxValue() {
-        if (right == null) {
-            return data;
+        if (this.right == null) {
+            return this.data;
         } else {
-            return right.getMaxValue();
+            return this.right.getMaxValue();
         }
     }
 
     @Override
     public T getMinValue() {
-        if (left == null) {
-            return data;
+        if (this.left == null) {
+            return this.data;
         } else {
-            return left.getMinValue();
+            return this.left.getMinValue();
         }
     }
 
     @Override
     public Boolean isLeaf() {
-        return !hasAnyChild();
+        return !this.hasLeftChild() &&! this.hasRightChild();
     }
 
     @Override
@@ -101,41 +122,27 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
 
     @Override
     public Boolean hasAnyChild() {
-        return this.hasRightChild() || this.hasLeftChild();
+        return this.hasLeftChild() || this.hasRightChild();
     }
 
     @Override
     public Boolean hasBothChildren() {
-        return this.hasRightChild() && this.hasLeftChild();
+        return !this.isLeaf();
     }
 
     @Override
     public void balance() {
-        if (this.right.height > this.left.height) {
-            if (this.right.right.height > this.right.left.height) {
-                this.rotateLeft();
-            } else {
-                this.right.rotateRight();
-                this.rotateLeft();
-            }
-        } else {
-            if (this.left.left.height > this.left.right.height) {
-                this.rotateRight();
-            } else {
-                this.left.rotateLeft();
-                this.rotateRight();
-            }
-        }
+
     }
 
     @Override
     public void setBalance(int balance) {
-        this.height = balance;
+
     }
 
     @Override
     public int getBalance() {
-        return this.height;
+        return 0;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package az.rock.lesson.cp5;
 
+import java.util.function.Consumer;
+
 public class AVLTree<T extends Comparable<T>> implements Tree<T> {
     private AVLNode<T> root;
 
@@ -22,8 +24,8 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T> {
     }
 
     @Override
-    public void traversal() {
-        this.root.traversal();
+    public void traversal(Consumer<T> consumer) {
+        this.root.traversal(consumer);
     }
 
     @Override
