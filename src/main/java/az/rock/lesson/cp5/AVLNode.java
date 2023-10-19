@@ -11,14 +11,15 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
     public int height;
 
     public AVLNode(T data) {
-        this.data = data;
-        this.height = 0;
+        this(data, null);
     }
 
     public AVLNode(T data, AVLNode<T> parent) {
         this.data = data;
-        this.height = 0;
         this.parent = parent;
+        this.height = 0;
+        this.left = EmptyNode.EMPTY_NODE;
+        this.right = EmptyNode.EMPTY_NODE;
     }
 
     public int getHeight() {
@@ -45,11 +46,11 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
     @Override
     public void remove(T data) {
         if (data.compareTo(this.data) < 0) {
-            if (this.left != null) {
+            if (this.hasLeftChild()) {
                 this.left.remove(data);
             }
         } else if (data.compareTo(this.data) > 0) {
-            if (this.right != null) {
+            if (this.hasRightChild()) {
                 this.right.remove(data);
             }
         } else {
@@ -78,18 +79,18 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
 
     @Override
     public void traversal(Consumer<T> consumer){
-        if (this.left != null) {
+        if (!this.left.isEmpty()) {
             this.left.traversal(consumer);
         }
         consumer.accept(this.data);
-        if (this.right != null) {
+        if (!this.right.isEmpty()) {
             this.right.traversal(consumer);
         }
     }
 
     @Override
     public T getMaxValue() {
-        if (this.right == null) {
+        if (this.right.isEmpty()) {
             return this.data;
         } else {
             return this.right.getMaxValue();
@@ -98,7 +99,7 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
 
     @Override
     public T getMinValue() {
-        if (this.left == null) {
+        if (this.left.isEmpty()) {
             return this.data;
         } else {
             return this.left.getMinValue();
@@ -112,12 +113,12 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
 
     @Override
     public Boolean hasLeftChild() {
-        return this.left != null;
+        return !(this.left instanceof EmptyNode);
     }
 
     @Override
     public Boolean hasRightChild() {
-        return this.right != null;
+        return !(this.right instanceof EmptyNode);
     }
 
     @Override
