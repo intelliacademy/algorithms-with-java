@@ -16,6 +16,17 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T> {
         }
     }
 
+    private void updateHeight(AVLNode<T> node) {
+        if (node == null) return;
+        node.height = Math.max(node.left.getHeight(), node.right.getHeight()) + 1;
+        updateHeight(node.parent);
+    }
+
+    public int getBalance(AVLNode<T> node) {
+        if (node == null || node.isEmpty()) return 0;
+        return node.left.getHeight() - node.right.getHeight();
+    }
+
     @Override
     public void remove(T data) {
         if (root != null) {
