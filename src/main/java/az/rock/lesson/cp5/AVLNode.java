@@ -41,6 +41,9 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
                 this.right.insert(data);
             }
         }
+        if (this.isInbalance()){
+            this.balance();
+        }
     }
 
     @Override
@@ -131,9 +134,30 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
         return !this.isLeaf();
     }
 
+    private void updateHeight(AVLNode<T> node) {
+        if (node == null) return;
+        node.height = Math.max(node.left.getHeight(), node.right.getHeight()) + 1;
+        updateHeight(node.parent);
+    }
+
     @Override
     public void balance() {
+        if (this.getBalance() > 1) {
+            if (this.left.getBalance() < 0) {
+                this.left.rotateLeft();
+            }
+            this.rotateRight();
+        } else if (this.getBalance() < -1) {
+            if (this.right.getBalance() > 0) {
+                this.right.rotateRight();
+            }
+            this.rotateLeft();
+        }
+        updateHeight(this);
+    }
 
+    private Boolean isInbalance() {
+        return this.getBalance() > 1 || this.getBalance() < -1;
     }
 
     @Override
@@ -143,16 +167,29 @@ public class AVLNode<T extends Comparable<T>> implements Node<T>{
 
     @Override
     public int getBalance() {
-        return 0;
+        if (this.isEmpty()) return 0;
+        return this.left.getHeight() - this.right.getHeight();
     }
 
     @Override
     public void rotateRight() {
-
+        if (this.parent != null) {
+            if (this == this.parent.left) {
+                this.parent.left = this.left;
+            } else if (this == this.parent.right) {
+                this.parent.right = this.left;
+            }
+        }
     }
 
     @Override
     public void rotateLeft() {
-
+        if (this.parent != null) {
+            if (this == this.parent.left) {
+                this.parent.left = this.right;
+            } else if (this == this.parent.right) {
+                this.parent.right = this.right;
+            }
+        }
     }
 }
