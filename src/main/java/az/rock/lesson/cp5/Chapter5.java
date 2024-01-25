@@ -7,6 +7,7 @@ public class Chapter5 {
         for (Integer number : numbers) {
             tree.insert(number);
         }
-        System.out.println("Max value: " + tree.getMaxValue());
+
+        System.out.println(tree);
     }
 }
