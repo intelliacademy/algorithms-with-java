@@ -1,9 +1,17 @@
 package az.rock.lesson.cp5;
 
-//height = 1 + max(left.height, right.height)
-//leaf node height = 0
-//empty node height = -1
-//balance = |left.height - right.height| > 1
+/**
+ * height = 1 + max(left.height, right.height)
+ * leaf node height = 0
+ * empty node height = -1
+ * balance factor = |left.height - right.height|
+ * if only left.height greater than 0 then left heavy (positive balance factor)
+ * else if onlyright.height greater than 0 then right heavy (negative balance factor)
+ * else balanced
+ *
+ * When tree is right heavy then we need to rotate left
+ * else when tree is left heavy then we need to rotate right
+ */
 public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     protected T data;
     protected Node<T> leftChild;
