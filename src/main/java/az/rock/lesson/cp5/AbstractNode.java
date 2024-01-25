@@ -8,14 +8,14 @@ package az.rock.lesson.cp5;
  * if only left.height greater than 0 then left heavy (positive balance factor)
  * else if onlyright.height greater than 0 then right heavy (negative balance factor)
  * else balanced
- *
+ * is balanced = |left.height - right.height| <= 1
  * When tree is right heavy then we need to rotate left
  * else when tree is left heavy then we need to rotate right
  */
 public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     protected T data;
-    protected Node<T> leftChild;
-    protected Node<T> rightChild;
+    protected AbstractNode<T> leftChild;
+    protected AbstractNode<T> rightChild;
     protected int height;
 
     public AbstractNode() {
@@ -26,7 +26,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
         this(data, EmptyNode.getInstance(), EmptyNode.getInstance());
     }
 
-    public AbstractNode(T data, Node<T> leftChild, Node<T> rightChild) {
+    public AbstractNode(T data, AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
         this();
         this.data = data;
         this.leftChild = leftChild;
@@ -37,6 +37,10 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
         return height;
     }
 
+    @Override
+    public Boolean isBalanced() {
+        return Math.abs(this.leftChild.getHeight() - this.rightChild.getHeight()) <= 1;
+    }
 
     @Override
     public Boolean isLeaf() {

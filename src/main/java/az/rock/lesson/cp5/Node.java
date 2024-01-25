@@ -17,6 +17,8 @@ public interface Node <T extends Comparable<T>>{
     }
     Boolean hasAnyChild();
     Boolean hasBothChildren();
+
+    public Boolean isBalanced();
     void balance();
     void setBalance(int balance);
     int getBalance();
