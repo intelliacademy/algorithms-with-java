@@ -3,7 +3,7 @@ package az.rock.lesson.cp5;
 import java.util.function.Consumer;
 
 
-//height = 1 + max(left.height, right.height)
+
 public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
 
     @Override

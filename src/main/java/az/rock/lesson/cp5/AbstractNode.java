@@ -1,5 +1,9 @@
 package az.rock.lesson.cp5;
 
+//height = 1 + max(left.height, right.height)
+//leaf node height = 0
+//empty node height = -1
+//balance = left.height - right.height (range -1, 0, 1)
 public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     protected T data;
     protected Node<T> leftChild;
