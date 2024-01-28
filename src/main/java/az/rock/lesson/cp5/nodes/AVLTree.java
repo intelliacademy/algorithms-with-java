@@ -1,8 +1,11 @@
-package az.rock.lesson.cp5;
+package az.rock.lesson.cp5.nodes;
 
 import java.util.function.Consumer;
 
 public class AVLTree<T extends Comparable<T>> implements Tree<T>{
+    private AbstractNode<T> root;
+
+
     @Override
     public void insert(T data) {
 

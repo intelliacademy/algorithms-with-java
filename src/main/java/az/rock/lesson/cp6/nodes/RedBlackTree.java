@@ -1,6 +1,6 @@
 package az.rock.lesson.cp6.nodes;
 
-import az.rock.lesson.cp5.Tree;
+import az.rock.lesson.cp5.nodes.Tree;
 
 import java.util.function.Consumer;
 
