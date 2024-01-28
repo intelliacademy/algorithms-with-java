@@ -7,6 +7,8 @@ public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
     void insert(T data);
     void remove(T data);
 
+    void updateHeight();
+
     default Boolean isGreaterThan(AbstractNode<T> that) {
         return this.compareTo(that) > 0;
     }
@@ -23,7 +25,6 @@ public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
         return this.isLessThan(that) || this.isEqualTo(that);
     }
 
-
     void traversal(Consumer<T> consumer);
     T getMaxValue();
     T getMinValue();
@@ -37,10 +38,24 @@ public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
     Boolean hasAnyChild();
     Boolean hasBothChildren();
 
-    public Boolean isBalanced();
-    void balance();
+    default Boolean isBalanced(){
+        return Math.abs(this.balance()) <= 1;
+    }
+
+    default Boolean isUnbalanced(){
+        return !this.isBalanced();
+    }
+
+    default Boolean isLeftHeavy(){
+        return this.balance() > 1;
+    }
+
+    default Boolean isRightHeavy(){
+        return this.balance() < -1;
+    }
+
+    Integer balance();
     void setBalance(int balance);
-    int getBalance();
-    void rotateRight();
-    void rotateLeft();
+    void leftRotation();
+    void rightRotation();
 }

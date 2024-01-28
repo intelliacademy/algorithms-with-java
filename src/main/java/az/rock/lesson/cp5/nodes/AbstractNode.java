@@ -48,6 +48,35 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     }
 
     @Override
+    public void leftRotation() {
+        var tempLeftChild = this.leftChild;
+        this.leftChild = tempLeftChild.rightChild;
+
+        if (!tempLeftChild.rightChild.isEmpty()) {
+            tempLeftChild.rightChild.setParent(this);
+        }
+
+        tempLeftChild.setParent(this.parent);
+    }
+
+    @Override
+    public void rightRotation() {
+        var tempRightChild = this.rightChild;
+        this.rightChild = tempRightChild.leftChild;
+
+        if (!tempRightChild.leftChild.isEmpty()) {
+            tempRightChild.leftChild.setParent(this);
+        }
+
+        tempRightChild.setParent(this.parent);
+    }
+
+    @Override
+    public Integer balance() {
+        return this.leftChild.getHeight() - this.rightChild.getHeight();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AbstractNode<?> that)) return false;
@@ -70,6 +99,11 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
 
     public Integer getHeight() {
         return height;
+    }
+
+    @Override
+    public void updateHeight() {
+        this.height = 1 + Math.max(this.leftChild.getHeight(), this.rightChild.getHeight());
     }
 
     @Override

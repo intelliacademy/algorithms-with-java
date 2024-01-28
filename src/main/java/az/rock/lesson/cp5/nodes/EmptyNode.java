@@ -40,10 +40,9 @@ public class EmptyNode <T extends Comparable<T>> extends AbstractNode<T>{
         return null;
     }
 
-
     @Override
-    public void balance() {
-
+    public Integer balance() {
+        return 0;
     }
 
     @Override
@@ -51,18 +50,16 @@ public class EmptyNode <T extends Comparable<T>> extends AbstractNode<T>{
 
     }
 
-    @Override
-    public int getBalance() {
-        return 0;
-    }
 
     @Override
-    public void rotateRight() {
+    public void leftRotation() {
 
     }
 
     @Override
-    public void rotateLeft() {
+    public void rightRotation() {
 
     }
+
+
 }

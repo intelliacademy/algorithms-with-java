@@ -28,12 +28,11 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
                 this.rightChild.insert(data);
             }
         }
+        this.parent.updateHeight();
     }
 
     @Override
     public void remove(T data) {
-        var node = new AVLNode<>(data);
-
 
     }
 
@@ -52,29 +51,11 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
         return null;
     }
 
-
-    @Override
-    public void balance() {
-
-    }
-
     @Override
     public void setBalance(int balance) {
 
     }
 
-    @Override
-    public int getBalance() {
-        return 0;
-    }
 
-    @Override
-    public void rotateRight() {
 
-    }
-
-    @Override
-    public void rotateLeft() {
-
-    }
 }
