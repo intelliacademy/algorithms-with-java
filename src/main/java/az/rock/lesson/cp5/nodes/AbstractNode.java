@@ -1,5 +1,7 @@
 package az.rock.lesson.cp5.nodes;
 
+import java.util.Objects;
+
 /**
  * height = 1 + max(left.height, right.height)
  * <br>
@@ -29,6 +31,10 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
         this.height = -1;
     }
 
+    public AbstractNode(T data) {
+        this(data, EmptyNode.getInstance(), EmptyNode.getInstance(), EmptyNode.getInstance());
+    }
+
     public AbstractNode(T data, AbstractNode<T> parent) {
         this(data, parent, EmptyNode.getInstance(), EmptyNode.getInstance());
     }
@@ -39,6 +45,27 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
         this.parent = parent;
         this.leftChild = leftChild;
         this.rightChild = rightChild;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbstractNode<?> that)) return false;
+        return this.data.equals(that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getData(), getParent(), getLeftChild(), getRightChild(), getHeight());
+    }
+
+    public void setParent(AbstractNode<T> parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public int compareTo(Node<T> o) {
+        return this.data.compareTo(o.getData());
     }
 
     public Integer getHeight() {
@@ -76,6 +103,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     }
 
 
+    @Override
     public T getData() {
         return data;
     }
