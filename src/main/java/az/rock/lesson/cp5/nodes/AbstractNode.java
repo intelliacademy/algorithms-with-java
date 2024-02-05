@@ -49,14 +49,9 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
 
     @Override
     public void leftRotation() {
-
         var tempRightChild = this.rightChild;//E
         this.rightChild = tempRightChild.leftChild;//
-
-        if (!tempRightChild.leftChild.isEmpty()) {
-            tempRightChild.leftChild.setParent(this);
-        }
-
+        tempRightChild.leftChild.setParent(this);
         tempRightChild.setParent(this.parent);
     }
 
@@ -64,11 +59,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     public void rightRotation() {
         var tempLeftChild = this.leftChild;
         this.leftChild = tempLeftChild.rightChild;
-
-        if (!tempLeftChild.rightChild.isEmpty()) {
-            tempLeftChild.rightChild.setParent(this);
-        }
-
+        tempLeftChild.rightChild.setParent(this);
         tempLeftChild.setParent(this.parent);
     }
 

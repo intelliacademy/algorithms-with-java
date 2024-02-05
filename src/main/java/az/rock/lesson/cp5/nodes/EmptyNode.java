@@ -11,6 +11,11 @@ public class EmptyNode <T extends Comparable<T>> extends AbstractNode<T>{
     }
 
     @Override
+    public Boolean isEmpty() {
+        return Boolean.TRUE;
+    }
+
+    @Override
     public Integer getHeight() {
         return -1;
     }
@@ -61,5 +66,7 @@ public class EmptyNode <T extends Comparable<T>> extends AbstractNode<T>{
 
     }
 
+    @Override
+    public void updateHeight() {}
 
 }

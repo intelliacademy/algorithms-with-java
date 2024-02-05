@@ -29,6 +29,7 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
             }
         }
         this.parent.updateHeight();
+
     }
 
     @Override

@@ -3,12 +3,16 @@ package az.rock.lesson.cp5.nodes;
 import java.util.function.Consumer;
 
 public class AVLTree<T extends Comparable<T>> implements Tree<T>{
-    private AbstractNode<T> root;
+    private AbstractNode<T> root = EmptyNode.getInstance();
 
 
     @Override
     public void insert(T data) {
-
+        if (root.isEmpty()) {
+            root = new AVLNode<>(data);
+        } else {
+            root.insert(data);
+        }
     }
 
     @Override
