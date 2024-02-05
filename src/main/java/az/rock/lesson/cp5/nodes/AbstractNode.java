@@ -21,6 +21,7 @@ import java.util.Objects;
  */
 
 public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
+    protected AbstractNode<T> root;
     protected T data;
     protected AbstractNode<T> parent;
     protected AbstractNode<T> leftChild;
@@ -31,16 +32,17 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
         this.height = -1;
     }
 
-    public AbstractNode(T data) {
-        this(data, EmptyNode.getInstance(), EmptyNode.getInstance(), EmptyNode.getInstance());
+    public AbstractNode(AbstractNode<T> root,T data) {
+        this(root,data, EmptyNode.getInstance(), EmptyNode.getInstance(), EmptyNode.getInstance());
     }
 
-    public AbstractNode(T data, AbstractNode<T> parent) {
-        this(data, parent, EmptyNode.getInstance(), EmptyNode.getInstance());
+    public AbstractNode(AbstractNode<T> root,T data, AbstractNode<T> parent) {
+        this(root,data, parent, EmptyNode.getInstance(), EmptyNode.getInstance());
     }
 
-    public AbstractNode(T data, AbstractNode<T> parent,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
+    public AbstractNode(AbstractNode<T> root,T data, AbstractNode<T> parent,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
         this();
+        this.root = root;
         this.data = data;
         this.parent = parent;
         this.leftChild = leftChild;
@@ -53,6 +55,21 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
         this.rightChild = tempRightChild.leftChild;//
         tempRightChild.leftChild.setParent(this);
         tempRightChild.setParent(this.parent);
+
+        var tempParent = this.parent;
+        this.parent = tempRightChild;
+        tempRightChild.leftChild = tempParent;
+        if (tempRightChild.getParent().getLeftChild() == this) {
+            tempRightChild.getParent().leftChild = tempRightChild;
+        } else if (tempRightChild.getParent().getRightChild() == this) {
+            tempRightChild.getParent().rightChild = tempRightChild;
+        }
+        if (this.root.isEmpty()){
+            this.root = tempRightChild;
+        }
+
+        this.updateHeight();
+        tempRightChild.updateHeight();
     }
 
     @Override
@@ -61,10 +78,51 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
         this.leftChild = tempLeftChild.rightChild;
         tempLeftChild.rightChild.setParent(this);
         tempLeftChild.setParent(this.parent);
+
+        var tempParent = this.parent;
+        this.parent = tempLeftChild;
+        tempLeftChild.rightChild = tempParent;
+        if (tempLeftChild.getParent().getRightChild() == this) {
+            tempLeftChild.getParent().rightChild = tempLeftChild;
+        } else if (tempLeftChild.getParent().getLeftChild() == this) {
+            tempLeftChild.getParent().leftChild = tempLeftChild;
+        }
+        if (this.root.isEmpty()){
+            this.root = tempLeftChild;
+        }
+
+        this.updateHeight();
+        tempLeftChild.updateHeight();
     }
 
     @Override
-    public Integer balance() {
+    public void settleViolation() {
+        this.updateHeight();
+        if (this.isLeftHeavy()){
+            if (this.leftChild.isRightHeavy()){
+                this.leftChild.leftRotation();
+            }
+            this.rightRotation();
+        } else if (this.isRightHeavy()){
+            if (this.rightChild.isLeftHeavy()){
+                this.rightChild.rightRotation();
+            }
+            this.leftRotation();
+        }else if (this.isRightHeavy()){
+            if (this.rightChild.isLeftHeavy()){
+                this.rightChild.rightRotation();
+            }
+            this.rightRotation();
+        } else if (this.isRightHeavy()){
+            if (this.leftChild.isRightHeavy()){
+                this.leftChild.leftRotation();
+            }
+            this.rightRotation();
+        }
+    }
+
+    @Override
+    public Integer getBalance() {
         return this.leftChild.getHeight() - this.rightChild.getHeight();
     }
 

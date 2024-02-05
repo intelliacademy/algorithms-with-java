@@ -21,7 +21,7 @@ public class EmptyNode <T extends Comparable<T>> extends AbstractNode<T>{
     }
 
     @Override
-    public void insert(T data) {
+    public void insert(AbstractNode<T> root,T data) {
 
     }
 
@@ -46,7 +46,7 @@ public class EmptyNode <T extends Comparable<T>> extends AbstractNode<T>{
     }
 
     @Override
-    public Integer balance() {
+    public Integer getBalance() {
         return 0;
     }
 

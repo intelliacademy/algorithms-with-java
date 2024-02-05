@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
     T getData();
-    void insert(T data);
+    void insert(AbstractNode<T> root,T data);
     void remove(T data);
 
     void updateHeight();
@@ -39,7 +39,7 @@ public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
     Boolean hasBothChildren();
 
     default Boolean isBalanced(){
-        return Math.abs(this.balance()) <= 1;
+        return Math.abs(this.getBalance()) <= 1;
     }
 
     default Boolean isUnbalanced(){
@@ -47,14 +47,15 @@ public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
     }
 
     default Boolean isLeftHeavy(){
-        return this.balance() > 1;
+        return this.getBalance() > 1;
     }
 
     default Boolean isRightHeavy(){
-        return this.balance() < -1;
+        return this.getBalance() < -1;
     }
 
-    Integer balance();
+    void settleViolation();
+    Integer getBalance();
     void setBalance(int balance);
     void leftRotation();
     void rightRotation();

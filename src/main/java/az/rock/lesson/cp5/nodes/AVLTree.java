@@ -11,7 +11,7 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
         if (root.isEmpty()) {
             root = new AVLNode<>(data);
         } else {
-            root.insert(data);
+            root.insert(root,data);
         }
     }
 
