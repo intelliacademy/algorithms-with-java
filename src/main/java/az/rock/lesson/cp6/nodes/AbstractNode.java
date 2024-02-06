@@ -25,6 +25,9 @@ public abstract class AbstractNode<T>  {
 
     public abstract AbstractNode<T> getGrandParent();
 
+    public abstract RedNode<T> toRedNode();
+
+    public abstract BlackNode<T> toBlackNode();
 
 
     public AbstractNode<T> getLeft() {
@@ -44,19 +47,19 @@ public abstract class AbstractNode<T>  {
     }
 
     public Boolean isLeaf() {
-        return this.left instanceof EmptyNode<T> && this.right instanceof EmptyNode<T>;
+        return this.left instanceof NilNode<T> && this.right instanceof NilNode<T>;
     }
 
     public Boolean hasLeft() {
-        return !(this.left instanceof EmptyNode<T>);
+        return !(this.left instanceof NilNode<T>);
     }
 
     public Boolean hasRight() {
-        return !(this.right instanceof EmptyNode<T>);
+        return !(this.right instanceof NilNode<T>);
     }
 
     public Boolean isEmpty() {
-        return this instanceof EmptyNode;
+        return this instanceof NilNode;
     }
 
 

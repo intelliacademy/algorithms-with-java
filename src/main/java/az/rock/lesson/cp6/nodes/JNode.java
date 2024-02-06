@@ -34,4 +34,18 @@ public class JNode<T> extends AbstractNode<T> {
     public AbstractNode<T> getGrandParent() {
         return null;
     }
+
+    @Override
+    public RedNode<T> toRedNode() {
+        if (!(this instanceof RedNode))
+            return new RedNode<T>(this.getValue(), this.getParent(), this.getLeft().toBlackNode(), this.getRight().toBlackNode());
+        else return (RedNode<T>) this;
+    }
+
+    @Override
+    public BlackNode<T> toBlackNode() {
+        if (!(this instanceof BlackNode))
+            return new BlackNode<T>(this.getValue(), this.getParent(), this.getLeft().toBlackNode(), this.getRight().toBlackNode());
+        else return (BlackNode<T>) this;
+    }
 }
