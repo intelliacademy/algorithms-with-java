@@ -50,6 +50,15 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     }
 
     @Override
+    public String toString() {
+        return "AbstractNode{" +
+                "data=" + data +
+                ", leftChild=" + leftChild +
+                ", rightChild=" + rightChild +
+                '}';
+    }
+
+    @Override
     public void leftRotation() {
         var tempRightChild = this.rightChild;//E
         this.rightChild = tempRightChild.leftChild;//
@@ -108,16 +117,6 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
                 this.rightChild.rightRotation();
             }
             this.leftRotation();
-        }else if (this.isRightHeavy()){
-            if (this.rightChild.isLeftHeavy()){
-                this.rightChild.rightRotation();
-            }
-            this.rightRotation();
-        } else if (this.isRightHeavy()){
-            if (this.leftChild.isRightHeavy()){
-                this.leftChild.leftRotation();
-            }
-            this.rightRotation();
         }
     }
 

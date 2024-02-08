@@ -34,4 +34,11 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
     public T getMinValue() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "AVLTree{" +
+                "root=" + root +
+                '}';
+    }
 }
