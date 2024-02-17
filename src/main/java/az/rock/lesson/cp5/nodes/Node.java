@@ -57,6 +57,6 @@ public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
     void settleViolation();
     Integer getBalance();
     void setBalance(int balance);
-    void leftRotation();
-    void rightRotation();
+    void rotateLeft();
+    void rotateRight();
 }

@@ -1,5 +1,7 @@
 package az.rock.lesson.cp5.nodes;
 
+import az.rock.lesson.util.Cloneable;
+
 import java.util.Objects;
 
 /**
@@ -20,7 +22,7 @@ import java.util.Objects;
  * else when tree is left heavy then we need to rotate right
  */
 
-public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
+public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>, Cloneable<AbstractNode<T>> {
     protected AbstractNode<T> root;
     protected T data;
     protected AbstractNode<T> parent;
@@ -31,6 +33,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     public AbstractNode() {
         this.height = -1;
     }
+
 
     public AbstractNode(AbstractNode<T> root,T data) {
         this(root,data, EmptyNode.getInstance(), EmptyNode.getInstance(), EmptyNode.getInstance());
@@ -59,45 +62,51 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     }
 
     @Override
-    public void leftRotation() {
-        var tempRightChild = this.rightChild;//E
-        this.rightChild = tempRightChild.leftChild;//
-        tempRightChild.leftChild.setParent(this);
-        tempRightChild.setParent(this.parent);
+    public void rotateLeft() {
+        var tempRightChild = this.rightChild.copy();//E
+        var grandChild = tempRightChild.leftChild.copy();//D
+        tempRightChild.leftChild = this;//B
+        this.rightChild = grandChild;//C
+        if (!grandChild.isEmpty()) {
+            grandChild.setParent(this);
+        }
 
         var tempParent = this.parent;
-        this.parent = tempRightChild;
-        tempRightChild.leftChild = tempParent;
-        if (tempRightChild.getParent().getLeftChild() == this) {
-            tempRightChild.getParent().leftChild = tempRightChild;
-        } else if (tempRightChild.getParent().getRightChild() == this) {
+        this.parent.setParent(tempRightChild);
+        tempRightChild.setParent(tempParent);
+
+        if (tempRightChild.getParent().getRightChild() == this) {
             tempRightChild.getParent().rightChild = tempRightChild;
+        } else if (tempRightChild.getParent().getLeftChild() == this) {
+            tempRightChild.getParent().leftChild = tempRightChild;
         }
-        if (this.root.isEmpty()){
-            this.root = tempRightChild;
-        }
+
+//        if (this.equals(this.root)){
+//            this.root = tempRightChild;
+//        }
 
         this.updateHeight();
         tempRightChild.updateHeight();
     }
 
     @Override
-    public void rightRotation() {
-        var tempLeftChild = this.leftChild;
-        this.leftChild = tempLeftChild.rightChild;
-        tempLeftChild.rightChild.setParent(this);
-        tempLeftChild.setParent(this.parent);
+    public void rotateRight() {
+        var tempLeftChild = this.leftChild.copy();
+        var grandChild = tempLeftChild.rightChild.copy();
+        tempLeftChild.rightChild = this;
+        this.leftChild = grandChild;
+        if (!grandChild.isEmpty()) {
+            grandChild.setParent(this);
+        }
 
         var tempParent = this.parent;
-        this.parent = tempLeftChild;
-        tempLeftChild.rightChild = tempParent;
+        this.parent.setParent(tempLeftChild);
+        tempLeftChild.setParent(tempParent);
+
         if (tempLeftChild.getParent().getRightChild() == this) {
             tempLeftChild.getParent().rightChild = tempLeftChild;
         } else if (tempLeftChild.getParent().getLeftChild() == this) {
             tempLeftChild.getParent().leftChild = tempLeftChild;
-        }
-        if (this.root.isEmpty()){
-            this.root = tempLeftChild;
         }
 
         this.updateHeight();
@@ -109,14 +118,14 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
         this.updateHeight();
         if (this.isLeftHeavy()){
             if (this.leftChild.isRightHeavy()){
-                this.leftChild.leftRotation();
+                this.leftChild.rotateLeft();
             }
-            this.rightRotation();
+            this.rotateRight();
         } else if (this.isRightHeavy()){
             if (this.rightChild.isLeftHeavy()){
-                this.rightChild.rightRotation();
+                this.rightChild.rotateRight();
             }
-            this.leftRotation();
+            this.rotateLeft();
         }
     }
 
@@ -202,4 +211,5 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>{
     public AbstractNode<T> getRightChild() {
         return rightChild;
     }
+
 }

@@ -10,6 +10,18 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
         super(EmptyNode.getInstance(),data);
     }
 
+    public AVLNode(AbstractNode<T> root,T data) {
+        super(root,data);
+    }
+
+    public AVLNode(AbstractNode<T> root,T data, AbstractNode<T> parent) {
+        super(root,data, parent);
+    }
+
+    public AVLNode(AbstractNode<T> root,T data, AbstractNode<T> parent,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
+        super(root,data, parent, leftChild, rightChild);
+    }
+
     @Override
     public void insert(AbstractNode<T> root,T data) {
         var node = new AVLNode<>(data);
@@ -58,5 +70,8 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
     }
 
 
-
+    @Override
+    public AbstractNode<T> copy() {
+        return new AVLNode<>(this.root,this.data,this.parent,this.leftChild,this.rightChild);
+    }
 }
