@@ -44,6 +44,8 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
         this.settleViolation();
     }
 
+
+
     @Override
     public void remove(T data) {
 
@@ -63,12 +65,6 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
     public T getMinValue() {
         return null;
     }
-
-    @Override
-    public void setBalance(int balance) {
-
-    }
-
 
     @Override
     public AbstractNode<T> copy() {

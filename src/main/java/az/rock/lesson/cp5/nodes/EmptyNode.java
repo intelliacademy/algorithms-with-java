@@ -51,11 +51,6 @@ public class EmptyNode <T extends Comparable<T>> extends AbstractNode<T>{
     }
 
     @Override
-    public void setBalance(int balance) {
-
-    }
-
-    @Override
     public void updateHeight() {}
 
     @Override

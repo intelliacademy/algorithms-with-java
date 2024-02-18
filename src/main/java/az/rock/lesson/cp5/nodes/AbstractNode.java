@@ -58,7 +58,13 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
                 "data=" + data +
                 ", leftChild=" + leftChild +
                 ", rightChild=" + rightChild +
-                '}';
+                ", height=" + height +
+                "\n}";
+    }
+
+    @Override
+    public void setBalance(int balance) {
+
     }
 
     @Override
@@ -66,7 +72,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
         var tempRightChild = this.rightChild.copy();
         var grandChildOfTempRightChild = tempRightChild.leftChild.copy();
         tempRightChild.leftChild = this;
-        this.rightChild = grandChildOfTempRightChild;
+        this.rightChild = grandChildOfTempRightChild.copy();
 
         if (!grandChildOfTempRightChild.isEmpty()){
             grandChildOfTempRightChild.setParent(this);
@@ -95,7 +101,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
         var tempLeftChild = this.leftChild.copy();
         var grandChildOfTempLeftChild = tempLeftChild.rightChild.copy();
         tempLeftChild.rightChild = this;
-        this.leftChild = grandChildOfTempLeftChild;
+        this.leftChild = grandChildOfTempLeftChild.copy();
 
         if (!grandChildOfTempLeftChild.isEmpty()){
             grandChildOfTempLeftChild.setParent(this);
