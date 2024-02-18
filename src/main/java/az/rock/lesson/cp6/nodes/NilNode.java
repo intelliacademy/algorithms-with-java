@@ -21,6 +21,16 @@ public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
         return NIL;
     }
 
+    @Override
+    public void setLeft(AbstractNode<T> left) {
+        throw new IllegalStateException("Nil node cannot have left child");
+    }
+
+    @Override
+    public void setRight(AbstractNode<T> right) {
+        throw new IllegalStateException("Nil node cannot have right child");
+    }
+
     public static <T extends Comparable<T>> NilNode<T> getInstance() {
         return new NilNode<T>();
     }
