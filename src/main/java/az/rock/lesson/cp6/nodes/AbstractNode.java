@@ -1,6 +1,6 @@
 package az.rock.lesson.cp6.nodes;
 
-public abstract class AbstractNode<T>  {
+public abstract class AbstractNode<T extends Comparable<T>>  {
     private final T value;
     private final AbstractNode<T> parent;
     private final AbstractNode<T> left;
@@ -13,7 +13,7 @@ public abstract class AbstractNode<T>  {
         this.right = right;
     }
 
-    public abstract AbstractNode<T> insert(T data);
+    public abstract void insert(AbstractNode<T> node);
 
     public abstract AbstractNode<T> remove(T data);
 

@@ -4,7 +4,6 @@ import az.rock.lesson.cp5.nodes.Tree;
 
 import java.util.function.Consumer;
 
-@SuppressWarnings("unchecked")
 public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
     private AbstractNode<T> root = NilNode.<T>getInstance();
 
@@ -16,7 +15,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         if (this.root.isEmpty()){
             this.root = node;
         } else {
-            this.root = this.root.insert(data);
+            this.root.insert(node);
         }
     }
 

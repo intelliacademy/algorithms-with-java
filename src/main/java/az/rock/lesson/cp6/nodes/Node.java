@@ -1,13 +1,13 @@
 package az.rock.lesson.cp6.nodes;
 
-public class Node<T> extends AbstractNode<T> {
+public class Node<T extends Comparable<T>> extends AbstractNode<T> {
     public Node(T value, AbstractNode<T> parent, AbstractNode<T> left, AbstractNode<T> right) {
         super(value, parent, left, right);
     }
 
     @Override
-    public AbstractNode<T> insert(T data) {
-        return null;
+    public void insert(AbstractNode<T> data) {
+
     }
 
     @Override
