@@ -36,6 +36,11 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
     }
 
     @Override
+    public AbstractNode<T> reColor() {
+        return null;
+    }
+
+    @Override
     public RedNode<T> toRedNode() {
         if (!(this instanceof RedNode))
             return new RedNode<T>(this.getValue(), this.getParent(), this.getLeft().toBlackNode(), this.getRight().toBlackNode());

@@ -29,6 +29,8 @@ public abstract class AbstractNode<T extends Comparable<T>>  {
 
     public abstract BlackNode<T> toBlackNode();
 
+    public abstract AbstractNode<T> reColor();
+
 
     public AbstractNode<T> getLeft() {
         return left;

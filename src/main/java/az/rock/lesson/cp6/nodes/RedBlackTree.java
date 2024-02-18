@@ -11,11 +11,10 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
 
     @Override
     public void insert(T data) {
-        AbstractNode<T> node= new BlackNode<T>(data, NilNode.<T>getInstance(), NilNode.<T>getInstance(), NilNode.<T>getInstance());
         if (this.root.isEmpty()){
-            this.root = node;
+            this.root = new BlackNode<>(data, NilNode.getRootReference(), NilNode.<T>getInstance(), NilNode.<T>getInstance());
         } else {
-            this.root.insert(node);
+            this.root.insert(new RedNode<>(data, root, NilNode.<T>getInstance(), NilNode.<T>getInstance()));
         }
     }
 

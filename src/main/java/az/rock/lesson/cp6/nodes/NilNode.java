@@ -1,6 +1,7 @@
 package az.rock.lesson.cp6.nodes;
 
 public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
+    public static NilNode NIL;
     public NilNode(AbstractNode<T> parent) {
         super(null, parent, null, null);
     }
@@ -11,6 +12,13 @@ public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
 
     public static <T extends Comparable<T>> NilNode<T> getInstance(BlackNode<T> parent) {
         return new NilNode<T>(parent);
+    }
+
+    public static synchronized  <T extends Comparable<T>> NilNode<T> getRootReference() {
+        if (NIL == null) {
+            NIL = new NilNode<T>();
+        }
+        return NIL;
     }
 
     public static <T extends Comparable<T>> NilNode<T> getInstance() {
