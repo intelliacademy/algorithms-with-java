@@ -16,6 +16,11 @@ public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
         return new NilNode<T>(parent);
     }
 
+    @Override
+    public AbstractNode<T> remove(T data) {
+        return this;
+    }
+
     public static synchronized  <T extends Comparable<T>> NilNode<T> getRootReference() {
         if (NIL == null) {
             NIL = new NilNode<T>();

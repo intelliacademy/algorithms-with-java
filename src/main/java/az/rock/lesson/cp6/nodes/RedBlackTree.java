@@ -21,7 +21,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
 
     @Override
     public void remove(T data) {
-
+        this.root = this.root.remove(data);
     }
 
     @Override
