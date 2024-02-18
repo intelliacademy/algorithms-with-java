@@ -63,27 +63,28 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
 
     @Override
     public void rotateLeft() {
-        var tempRightChild = this.rightChild.copy();//E
-        var grandChild = tempRightChild.leftChild.copy();//D
-        tempRightChild.leftChild = this;//B
-        this.rightChild = grandChild;//C
-        if (!grandChild.isEmpty()) {
-            grandChild.setParent(this);
+        var tempRightChild = this.rightChild.copy();
+        var grandChildOfTempRightChild = tempRightChild.leftChild.copy();
+        tempRightChild.leftChild = this;
+        this.rightChild = grandChildOfTempRightChild;
+
+        if (!grandChildOfTempRightChild.isEmpty()){
+            grandChildOfTempRightChild.setParent(this);
         }
 
-        var tempParent = this.parent;
-        this.parent.setParent(tempRightChild);
+        var tempParent = this.parent.copy();
+        this.setParent(tempRightChild);
         tempRightChild.setParent(tempParent);
 
-        if (tempRightChild.getParent().getRightChild() == this) {
-            tempRightChild.getParent().rightChild = tempRightChild;
-        } else if (tempRightChild.getParent().getLeftChild() == this) {
+        if(!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getLeftChild() == this){
             tempRightChild.getParent().leftChild = tempRightChild;
+        } else if (!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getRightChild() == this){
+            tempRightChild.getParent().rightChild = tempRightChild;
         }
 
-//        if (this.equals(this.root)){
-//            this.root = tempRightChild;
-//        }
+        if (this.equals(this.root)){
+            this.root = tempRightChild;
+        }
 
         this.updateHeight();
         tempRightChild.updateHeight();
@@ -92,21 +93,26 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
     @Override
     public void rotateRight() {
         var tempLeftChild = this.leftChild.copy();
-        var grandChild = tempLeftChild.rightChild.copy();
+        var grandChildOfTempLeftChild = tempLeftChild.rightChild.copy();
         tempLeftChild.rightChild = this;
-        this.leftChild = grandChild;
-        if (!grandChild.isEmpty()) {
-            grandChild.setParent(this);
+        this.leftChild = grandChildOfTempLeftChild;
+
+        if (!grandChildOfTempLeftChild.isEmpty()){
+            grandChildOfTempLeftChild.setParent(this);
         }
 
-        var tempParent = this.parent;
-        this.parent.setParent(tempLeftChild);
+        var tempParent = this.parent.copy();
+        this.setParent(tempLeftChild);
         tempLeftChild.setParent(tempParent);
 
-        if (tempLeftChild.getParent().getRightChild() == this) {
-            tempLeftChild.getParent().rightChild = tempLeftChild;
-        } else if (tempLeftChild.getParent().getLeftChild() == this) {
+        if(!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getLeftChild() == this){
             tempLeftChild.getParent().leftChild = tempLeftChild;
+        } else if (!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getRightChild() == this){
+            tempLeftChild.getParent().rightChild = tempLeftChild;
+        }
+
+        if (this.equals(this.root)){
+            this.root = tempLeftChild;
         }
 
         this.updateHeight();

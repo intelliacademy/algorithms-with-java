@@ -55,17 +55,6 @@ public class EmptyNode <T extends Comparable<T>> extends AbstractNode<T>{
 
     }
 
-
-    @Override
-    public void rotateLeft() {
-
-    }
-
-    @Override
-    public void rotateRight() {
-
-    }
-
     @Override
     public void updateHeight() {}
 

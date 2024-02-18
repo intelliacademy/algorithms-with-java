@@ -8,7 +8,7 @@ public class Chapter5_AVLTree {
         Integer[] unSortedNumbersArray = { 32, 10, 1, 19, 16, 12, 55, 41 };
         var sortedNumbersArray = new Integer[] { 1, 10, 12, 16, 19, 32, 41, 55 };
         Tree<Integer> tree = new AVLTree<>();
-        for (Integer number : unSortedNumbersArray) {
+        for (Integer number : sortedNumbersArray) {
             tree.insert(number);
         }
 
