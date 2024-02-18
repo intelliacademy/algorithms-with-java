@@ -1,7 +1,7 @@
 package az.rock.lesson.cp6.nodes;
 
-public class JNode<T> extends AbstractNode<T> {
-    public JNode(T value, AbstractNode<T> parent, AbstractNode<T> left, AbstractNode<T> right) {
+public class Node<T> extends AbstractNode<T> {
+    public Node(T value, AbstractNode<T> parent, AbstractNode<T> left, AbstractNode<T> right) {
         super(value, parent, left, right);
     }
 
