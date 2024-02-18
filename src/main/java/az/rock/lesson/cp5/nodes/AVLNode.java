@@ -22,27 +22,7 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
         super(root,data, parent, leftChild, rightChild);
     }
 
-    @Override
-    public void insert(AbstractNode<T> root,T data) {
-        var node = new AVLNode<>(data);
-        if (node.isLessThan(this)) {
-            if (this.leftChild.isEmpty()) {
-                this.leftChild = node;
-                node.setParent(this);
-            } else {
-                this.leftChild.insert(root,data);
-            }
-        } else {
-            if (this.rightChild.isEmpty()) {
-                this.rightChild = node;
-                node.setParent(this);
-            } else {
-                this.rightChild.insert(root,data);
-            }
-        }
-        this.parent.updateHeight();
-        this.settleViolation();
-    }
+
 
 
 

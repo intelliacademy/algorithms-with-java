@@ -24,6 +24,7 @@ import java.util.Objects;
 
 public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>, Cloneable<AbstractNode<T>> {
     protected AbstractNode<T> root;
+
     protected T data;
     protected AbstractNode<T> parent;
     protected AbstractNode<T> leftChild;
@@ -52,6 +53,31 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
         this.rightChild = rightChild;
     }
 
+
+    @Override
+    public void insert(AbstractNode<T> root,AbstractNode<T> parent,T data) {
+        this.root = root;
+        this.parent = parent;
+        var node = new AVLNode<>(data);
+        if (node.isLessThan(this)) {
+            if (this.leftChild.isEmpty()) {
+                this.leftChild = node;
+                node.setParent(this);
+            } else {
+                this.leftChild.insert(root,this,data);
+            }
+        } else {
+            if (this.rightChild.isEmpty()) {
+                this.rightChild = node;
+                node.setParent(this);
+            } else {
+                this.rightChild.insert(root,this,data);
+            }
+        }
+        this.parent.updateHeight();
+        this.settleViolation();
+    }
+
     @Override
     public String toString() {
         return "AbstractNode{" +
@@ -69,22 +95,22 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
 
     @Override
     public void rotateLeft() {
-        var tempRightChild = this.rightChild.copy();
-        var grandChildOfTempRightChild = tempRightChild.leftChild.copy();
+        var tempRightChild = this.rightChild;
+        var grandChildOfTempRightChild = tempRightChild.leftChild;
         tempRightChild.leftChild = this;
-        this.rightChild = grandChildOfTempRightChild.copy();
+        this.rightChild = grandChildOfTempRightChild;
 
         if (!grandChildOfTempRightChild.isEmpty()){
             grandChildOfTempRightChild.setParent(this);
         }
 
-        var tempParent = this.parent.copy();
+        var tempParent = this.parent;
         this.setParent(tempRightChild);
         tempRightChild.setParent(tempParent);
 
-        if(!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getLeftChild() == this){
+        if(!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getLeftChild().equals(this)){
             tempRightChild.getParent().leftChild = tempRightChild;
-        } else if (!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getRightChild() == this){
+        } else if (!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getRightChild().equals(this)){
             tempRightChild.getParent().rightChild = tempRightChild;
         }
 
@@ -98,22 +124,22 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
 
     @Override
     public void rotateRight() {
-        var tempLeftChild = this.leftChild.copy();
-        var grandChildOfTempLeftChild = tempLeftChild.rightChild.copy();
+        var tempLeftChild = this.leftChild;
+        var grandChildOfTempLeftChild = tempLeftChild.rightChild;
         tempLeftChild.rightChild = this;
-        this.leftChild = grandChildOfTempLeftChild.copy();
+        this.leftChild = grandChildOfTempLeftChild;
 
         if (!grandChildOfTempLeftChild.isEmpty()){
             grandChildOfTempLeftChild.setParent(this);
         }
 
-        var tempParent = this.parent.copy();
+        var tempParent = this.parent;
         this.setParent(tempLeftChild);
         tempLeftChild.setParent(tempParent);
 
-        if(!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getLeftChild() == this){
+        if(!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getLeftChild().equals(this)){
             tempLeftChild.getParent().leftChild = tempLeftChild;
-        } else if (!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getRightChild() == this){
+        } else if (!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getRightChild().equals(this)){
             tempLeftChild.getParent().rightChild = tempLeftChild;
         }
 
@@ -150,7 +176,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AbstractNode<?> that)) return false;
-        return this.data.equals(that.data);
+        return Objects.equals(getHeight(), that.getHeight()) && Objects.equals(root, that.root) && Objects.equals(getData(), that.getData()) && Objects.equals(getParent(), that.getParent()) && Objects.equals(getLeftChild(), that.getLeftChild()) && Objects.equals(getRightChild(), that.getRightChild());
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
     T getData();
-    void insert(AbstractNode<T> root,T data);
+    void insert(AbstractNode<T> root,AbstractNode<T> parent,T data);
     void remove(T data);
 
     void updateHeight();

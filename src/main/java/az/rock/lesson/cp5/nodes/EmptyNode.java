@@ -21,19 +21,10 @@ public class EmptyNode <T extends Comparable<T>> extends AbstractNode<T>{
     }
 
     @Override
-    public void insert(AbstractNode<T> root,T data) {
-
-    }
+    public void remove(T data) {}
 
     @Override
-    public void remove(T data) {
-
-    }
-
-    @Override
-    public void traversal(Consumer<T> consumer) {
-
-    }
+    public void traversal(Consumer<T> consumer) {}
 
     @Override
     public T getMaxValue() {
