@@ -2,6 +2,7 @@ package az.rock.lesson.cp6.nodes;
 
 import az.rock.lesson.cp5.nodes.Tree;
 
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
@@ -25,7 +26,12 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
 
     @Override
     public void traversal(Consumer<T> consumer) {
+        this.root.traverseInOrder(consumer);
+    }
 
+    @Override
+    public T reduce(BiFunction<T, T, T> function) {
+        return this.root.reduce(function);
     }
 
     @Override

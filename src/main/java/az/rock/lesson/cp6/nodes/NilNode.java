@@ -1,5 +1,7 @@
 package az.rock.lesson.cp6.nodes;
 
+import java.util.function.BiFunction;
+
 public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
     public static NilNode NIL;
     public NilNode(AbstractNode<T> parent) {
@@ -19,6 +21,11 @@ public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
             NIL = new NilNode<T>();
         }
         return NIL;
+    }
+
+    @Override
+    public T reduce(BiFunction<T, T, T> function) {
+        return null;
     }
 
     @Override

@@ -5,6 +5,7 @@ import az.rock.lesson.cp6.nodes.RedBlackTree;
 
 public class Chapter6_RedBlackTree {
     public static void main(String[] args) {
+
         System.out.println("Chapter 6");
 
         Integer[] unSortedNumbersArray = { 32, 10, 1, 19, 16, 12, 55, 41 };
@@ -14,6 +15,9 @@ public class Chapter6_RedBlackTree {
             tree.insert(number);
         }
 
-        System.out.println("Tree: " + tree);
+
+
+        var result = tree.reduce(Integer::sum);
+        System.out.println("Result: " + result);
     }
 }

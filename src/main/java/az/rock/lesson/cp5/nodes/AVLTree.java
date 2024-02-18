@@ -1,5 +1,6 @@
 package az.rock.lesson.cp5.nodes;
 
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class AVLTree<T extends Comparable<T>> implements Tree<T>{
@@ -24,6 +25,11 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
     @Override
     public void traversal(Consumer<T> consumer) {
 
+    }
+
+    @Override
+    public T reduce(BiFunction<T, T, T> function) {
+        return null;
     }
 
     @Override
