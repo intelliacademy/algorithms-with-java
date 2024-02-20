@@ -11,20 +11,22 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
     }
 
     @Override
-    public void insert(AbstractNode<T> node) {
+    public AbstractNode<T> insert(AbstractNode<T> node) {
         if (node.isGreaterOrEqualsThan(this)) {
             if(this.hasRight()){
-                this.getRight().insert(node);
+                return this.getRightChild().insert(node);
             } else {
                 node.setParent(this);
-                this.setRight(node);
+                this.setRightChild(node);
+                return node;
             }
         } else {
             if(this.hasLeft()){
-                this.getLeft().insert(node);
+                return this.getLeftChild().insert(node);
             } else {
                 node.setParent(this);
-                this.setLeft(node);
+                this.setLeftChild(node);
+                return node;
             }
         }
     }
@@ -63,14 +65,14 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
     @Override
     public RedNode<T> toRedNode() {
         if (!(this instanceof RedNode))
-            return new RedNode<T>(this.getValue(), this.getParent(), this.getLeft().toBlackNode(), this.getRight().toBlackNode());
+            return new RedNode<T>(this.getValue(), this.getParent(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
         else return (RedNode<T>) this;
     }
 
     @Override
     public BlackNode<T> toBlackNode() {
         if (!(this instanceof BlackNode))
-            return new BlackNode<T>(this.getValue(), this.getParent(), this.getLeft().toBlackNode(), this.getRight().toBlackNode());
+            return new BlackNode<T>(this.getValue(), this.getParent(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
         else return (BlackNode<T>) this;
     }
 }

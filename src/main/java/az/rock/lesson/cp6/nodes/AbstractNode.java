@@ -9,6 +9,28 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
     private AbstractNode<T> left;
     private AbstractNode<T> right;
 
+    private int height;
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void updateHeight() {
+        this.height = 1 + Math.max(this.left.getHeight(), this.right.getHeight());
+    }
+
+    public Boolean isLeftHeavy() {
+        return this.getBalance() > 1;
+    }
+
+    public Boolean isRightHeavy() {
+        return this.getBalance() < -1;
+    }
+
+    public Integer getBalance(){
+        return this.left.getHeight() - this.right.getHeight();
+    }
+
     protected AbstractNode(T value, AbstractNode<T> parent, AbstractNode<T> left, AbstractNode<T> right) {
         this.value = value;
         this.parent = parent;
@@ -21,10 +43,10 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         T rightValue = null;
         if (!this.isLeaf()) {
             if (this.hasLeft()) {
-                leftValue = this.getLeft().reduce(function);
+                leftValue = this.getLeftChild().reduce(function);
             }
             if (this.hasRight()) {
-                rightValue = this.getRight().reduce(function);
+                rightValue = this.getRightChild().reduce(function);
             }
             if (leftValue == null || rightValue == null) {
                 return function.apply(leftValue == null ? rightValue : leftValue, this.getValue());
@@ -35,30 +57,30 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
 
     public void traverseInOrder(Consumer<T> consumer) {
         if (this.hasLeft()) {
-            this.getLeft().traverseInOrder(consumer);
+            this.getLeftChild().traverseInOrder(consumer);
         }
         consumer.accept(this.getValue());
         if (this.hasRight()) {
-            this.getRight().traverseInOrder(consumer);
+            this.getRightChild().traverseInOrder(consumer);
         }
     }
 
     public void traversePreOrder(Consumer<T> consumer) {
         consumer.accept(this.getValue());
         if (this.hasLeft()) {
-            this.getLeft().traversePreOrder(consumer);
+            this.getLeftChild().traversePreOrder(consumer);
         }
         if (this.hasRight()) {
-            this.getRight().traversePreOrder(consumer);
+            this.getRightChild().traversePreOrder(consumer);
         }
     }
 
     public void traversePostOrder(Consumer<T> consumer) {
         if (this.hasLeft()) {
-            this.getLeft().traversePostOrder(consumer);
+            this.getLeftChild().traversePostOrder(consumer);
         }
         if (this.hasRight()) {
-            this.getRight().traversePostOrder(consumer);
+            this.getRightChild().traversePostOrder(consumer);
         }
         consumer.accept(this.getValue());
     }
@@ -83,7 +105,7 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         return this.isLessThan(node) || this.isEqualTo(node);
     }
 
-    public abstract void insert(AbstractNode<T> node);
+    public abstract AbstractNode<T> insert(AbstractNode<T> node);
 
     public abstract AbstractNode<T> remove(T data);
 
@@ -102,19 +124,19 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
     public abstract AbstractNode<T> reColor();
 
 
-    public AbstractNode<T> getLeft() {
+    public AbstractNode<T> getLeftChild() {
         return left;
     }
 
-    public AbstractNode<T> getRight() {
+    public AbstractNode<T> getRightChild() {
         return right;
     }
 
-    public void setLeft(AbstractNode<T> left) {
+    public void setLeftChild(AbstractNode<T> left) {
         this.left = left;
     }
 
-    public void setRight(AbstractNode<T> right){
+    public void setRightChild(AbstractNode<T> right){
         this.right = right;
     }
 
