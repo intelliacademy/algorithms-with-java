@@ -53,28 +53,34 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
         this.rightChild = rightChild;
     }
 
+    public void setLeftChild(AbstractNode<T> leftChild) {
+        this.leftChild = leftChild;
+    }
+
+    public void setRightChild(AbstractNode<T> rightChild) {
+        this.rightChild = rightChild;
+    }
 
     @Override
-    public void insert(AbstractNode<T> root,AbstractNode<T> parent,T data) {
-        this.root = root;
+    public AbstractNode<T> insert(AbstractNode<T> parent, T data) {
         var node = new AVLNode<>(data);
         if (node.isLessThan(this)) {
             if (this.leftChild.isEmpty()) {
                 this.leftChild = node;
                 node.setParent(this);
+                return this;
             } else {
-                this.leftChild.insert(root,this,data);
+                return this.leftChild.insert(this,data);
             }
         } else {
             if (this.rightChild.isEmpty()) {
                 this.rightChild = node;
                 node.setParent(this);
+                return this;
             } else {
-                this.rightChild.insert(root,this,data);
+                return this.rightChild.insert(this,data);
             }
         }
-        this.parent.updateHeight();
-        this.settleViolation();
     }
 
     @Override
@@ -92,79 +98,6 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
 
     }
 
-    @Override
-    public void rotateLeft() {
-        var tempRightChild = this.rightChild;
-        var grandChildOfTempRightChild = tempRightChild.leftChild;
-        tempRightChild.leftChild = this;
-        this.rightChild = grandChildOfTempRightChild;
-
-        if (!grandChildOfTempRightChild.isEmpty()){
-            grandChildOfTempRightChild.setParent(this);
-        }
-
-        var tempParent = this.parent;
-        this.setParent(tempRightChild);
-        tempRightChild.setParent(tempParent);
-
-        if(!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getLeftChild().equals(this)){
-            tempRightChild.getParent().leftChild = tempRightChild;
-        } else if (!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getRightChild().equals(this)){
-            tempRightChild.getParent().rightChild = tempRightChild;
-        }
-
-        if (this.equals(this.root)){
-            this.root = tempRightChild;
-        }
-
-        this.updateHeight();
-        tempRightChild.updateHeight();
-    }
-
-    @Override
-    public void rotateRight() {
-        var tempLeftChild = this.leftChild;
-        var grandChildOfTempLeftChild = tempLeftChild.rightChild;
-        tempLeftChild.rightChild = this;
-        this.leftChild = grandChildOfTempLeftChild;
-
-        if (!grandChildOfTempLeftChild.isEmpty()){
-            grandChildOfTempLeftChild.setParent(this);
-        }
-
-        var tempParent = this.parent;
-        this.setParent(tempLeftChild);
-        tempLeftChild.setParent(tempParent);
-
-        if(!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getLeftChild().equals(this)){
-            tempLeftChild.getParent().leftChild = tempLeftChild;
-        } else if (!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getRightChild().equals(this)){
-            tempLeftChild.getParent().rightChild = tempLeftChild;
-        }
-
-        if (this.equals(this.root)){
-            this.root = tempLeftChild;
-        }
-
-        this.updateHeight();
-        tempLeftChild.updateHeight();
-    }
-
-    @Override
-    public void settleViolation() {
-        this.updateHeight();
-        if (this.isLeftHeavy()){
-            if (this.leftChild.isRightHeavy()){
-                this.leftChild.rotateLeft();
-            }
-            this.rotateRight();
-        } else if (this.isRightHeavy()){
-            if (this.rightChild.isLeftHeavy()){
-                this.rightChild.rotateRight();
-            }
-            this.rotateLeft();
-        }
-    }
 
     @Override
     public Integer getBalance() {

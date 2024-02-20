@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @CSVModel
-public class Person implements Comparable<Person> , Cloneable {
+public class Person implements Comparable<Person>, Cloneable<Person> {
 
     @CSVColumn(name = "id",type = ColumnType.GUID)
     private UUID id;
@@ -152,7 +152,7 @@ public class Person implements Comparable<Person> , Cloneable {
     }
 
     @Override
-    public Object copy() {
+    public Person copy() {
         return clone();
     }
 

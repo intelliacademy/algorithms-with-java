@@ -2,9 +2,11 @@ package az.rock.lesson.cp5.nodes;
 
 import java.util.function.Consumer;
 
-public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
+public interface Node <T extends Comparable<T>> extends Comparable<Node<T>> {
     T getData();
-    void insert(AbstractNode<T> root,AbstractNode<T> parent,T data);
+
+    AbstractNode<T> insert(AbstractNode<T> parent, T data);
+
     void remove(T data);
 
     void updateHeight();
@@ -26,37 +28,42 @@ public interface Node <T extends Comparable<T>> extends Comparable<Node<T>>{
     }
 
     void traversal(Consumer<T> consumer);
+
     T getMaxValue();
+
     T getMinValue();
+
     Boolean isLeaf();
+
     Boolean hasLeftChild();
+
     Boolean hasRightChild();
 
     default Boolean isEmpty() {
         return Boolean.FALSE;
     }
+
     Boolean hasAnyChild();
+
     Boolean hasBothChildren();
 
-    default Boolean isBalanced(){
+    default Boolean isBalanced() {
         return Math.abs(this.getBalance()) <= 1;
     }
 
-    default Boolean isUnbalanced(){
+    default Boolean isUnbalanced() {
         return !this.isBalanced();
     }
 
-    default Boolean isLeftHeavy(){
+    default Boolean isLeftHeavy() {
         return this.getBalance() > 1;
     }
 
-    default Boolean isRightHeavy(){
+    default Boolean isRightHeavy() {
         return this.getBalance() < -1;
     }
 
-    void settleViolation();
     Integer getBalance();
+
     void setBalance(int balance);
-    void rotateLeft();
-    void rotateRight();
 }

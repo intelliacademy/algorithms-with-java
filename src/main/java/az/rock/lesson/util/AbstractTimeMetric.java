@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
-public abstract class AbstractTimeMetric<T extends Comparable<T> & Cloneable> implements Sort<T>{
+public abstract class AbstractTimeMetric<T extends Comparable<T> & Cloneable<T>> implements Sort<T>{
 
     public List<T> sortAsMetric(List<T> list){
         var startInstant = Instant.now();
