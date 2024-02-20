@@ -17,6 +17,16 @@ public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
     }
 
     @Override
+    public void updateHeight() {
+
+    }
+
+    @Override
+    public Integer getBalance() {
+        return 0;
+    }
+
+    @Override
     public int getHeight() {
         return -1;
     }

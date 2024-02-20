@@ -22,7 +22,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
     }
 
     private void settleViolations(AbstractNode<T> node) {
-        while(node != null) {
+        while(node != null && !node.equals(NilNode.getRootReference())) {
             node.updateHeight();
             this.settleViolation(node);
             node = node.getParent();
@@ -58,16 +58,12 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         node.setParent(tempRightChild);
         tempRightChild.setParent(tempParent);
 
-        if(!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getLeftChild() == node){
+        if(!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getLeftChild() == node)
             tempRightChild.getParent().setLeftChild(tempRightChild);
-        } else if (!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getRightChild() == (node)){
+        else if (!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getRightChild() == node)
             tempRightChild.getParent().setRightChild(tempRightChild);
-        }
 
-        if (node.equals(this.root)){
-            this.root = tempRightChild;
-        }
-
+        if (node.equals(this.root)) this.root = tempRightChild;
         node.updateHeight();
         tempRightChild.updateHeight();
     }
@@ -78,24 +74,18 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         tempLeftChild.setRightChild(node);
         node.setLeftChild(grandChildOfTempLeftChild);
 
-        if (!grandChildOfTempLeftChild.isEmpty()){
-            grandChildOfTempLeftChild.setParent(node);
-        }
+        if (!grandChildOfTempLeftChild.isEmpty()) grandChildOfTempLeftChild.setParent(node);
 
         var tempParent = node.getParent();
         node.setParent(tempLeftChild);
         tempLeftChild.setParent(tempParent);
 
-        if(!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getLeftChild() == node){
+        if(!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getLeftChild() == node)
             tempLeftChild.getParent().setLeftChild(tempLeftChild);
-        } else if (!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getRightChild()  == node){
+        else if (!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getRightChild()  == node)
             tempLeftChild.getParent().setRightChild(tempLeftChild);
-        }
 
-        if (node == this.root){
-            this.root = tempLeftChild;
-        }
-
+        if (node == this.root) this.root = tempLeftChild;
         node.updateHeight();
         tempLeftChild.updateHeight();
     }
