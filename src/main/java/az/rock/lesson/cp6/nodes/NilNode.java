@@ -17,6 +17,11 @@ public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
     }
 
     @Override
+    public int getHeight() {
+        return -1;
+    }
+
+    @Override
     public AbstractNode<T> remove(T data) {
         return this;
     }

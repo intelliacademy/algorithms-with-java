@@ -4,7 +4,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class AVLTree<T extends Comparable<T>> implements Tree<T>{
-    private AbstractNode<T> root = EmptyNode.getInstance();
+    private AbstractNode<T> root = NillNode.getInstance();
 
     @Override
     public void insert(T data) {

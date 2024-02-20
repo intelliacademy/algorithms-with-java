@@ -37,11 +37,11 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
 
 
     public AbstractNode(AbstractNode<T> root,T data) {
-        this(root,data, EmptyNode.getInstance(), EmptyNode.getInstance(), EmptyNode.getInstance());
+        this(root,data, NillNode.getInstance(), NillNode.getInstance(), NillNode.getInstance());
     }
 
     public AbstractNode(AbstractNode<T> root,T data, AbstractNode<T> parent) {
-        this(root,data, parent, EmptyNode.getInstance(), EmptyNode.getInstance());
+        this(root,data, parent, NillNode.getInstance(), NillNode.getInstance());
     }
 
     public AbstractNode(AbstractNode<T> root,T data, AbstractNode<T> parent,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {

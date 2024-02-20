@@ -9,7 +9,11 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
     private AbstractNode<T> left;
     private AbstractNode<T> right;
 
-    private int height;
+    private int height = 0;
+
+    public Boolean isBalanced() {
+        return Math.abs(this.left.getHeight() - this.right.getHeight()) <= 1;
+    }
 
     public int getHeight() {
         return height;

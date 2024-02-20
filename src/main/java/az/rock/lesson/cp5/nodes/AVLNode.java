@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
 
     public AVLNode(T data) {
-        super(EmptyNode.getInstance(),data);
+        super(NillNode.getInstance(),data);
     }
 
     public AVLNode(AbstractNode<T> root,T data) {

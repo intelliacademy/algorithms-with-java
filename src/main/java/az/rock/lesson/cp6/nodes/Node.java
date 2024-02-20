@@ -11,6 +11,11 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
     }
 
     @Override
+    public int getHeight() {
+        return -1;
+    }
+
+    @Override
     public AbstractNode<T> insert(AbstractNode<T> node) {
         if (node.isGreaterOrEqualsThan(this)) {
             if(this.hasRight()){
