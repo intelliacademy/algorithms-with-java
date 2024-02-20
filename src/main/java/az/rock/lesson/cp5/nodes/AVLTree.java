@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 public class AVLTree<T extends Comparable<T>> implements Tree<T>{
     private AbstractNode<T> root = EmptyNode.getInstance();
 
-
     @Override
     public void insert(T data) {
         if (root.isEmpty()) {

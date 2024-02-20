@@ -57,7 +57,6 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
     @Override
     public void insert(AbstractNode<T> root,AbstractNode<T> parent,T data) {
         this.root = root;
-        this.parent = parent;
         var node = new AVLNode<>(data);
         if (node.isLessThan(this)) {
             if (this.leftChild.isEmpty()) {

@@ -1,11 +1,12 @@
 package az.rock.lesson.sort;
 
 import az.rock.lesson.util.AbstractTimeMetric;
+import az.rock.lesson.util.Cloneable;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class InsertionSort <T extends Comparable<T> & Cloneable> extends AbstractTimeMetric<T> {
+public class InsertionSort <T extends Comparable<T> & Cloneable<T>> extends AbstractTimeMetric<T> {
 
     @Override
     public List<T> sort(List<T> list) {

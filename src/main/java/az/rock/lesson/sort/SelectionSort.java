@@ -1,11 +1,12 @@
 package az.rock.lesson.sort;
 
 import az.rock.lesson.util.AbstractTimeMetric;
+import az.rock.lesson.util.Cloneable;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class SelectionSort<T extends  Cloneable & Comparable<T> > extends AbstractTimeMetric<T> {
+public class SelectionSort<T extends Cloneable<T> & Comparable<T> > extends AbstractTimeMetric<T> {
 
     private T min;
 

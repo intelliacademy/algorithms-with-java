@@ -3,13 +3,14 @@ package az.rock.lesson.model;
 import az.rock.csv4j.annotation.CSVColumn;
 import az.rock.csv4j.annotation.CSVModel;
 import az.rock.csv4j.annotation.ColumnType;
+import az.rock.lesson.util.Cloneable;
 
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
 @CSVModel
-public class Person implements Comparable<Person> ,Cloneable {
+public class Person implements Comparable<Person> , Cloneable {
 
     @CSVColumn(name = "id",type = ColumnType.GUID)
     private UUID id;
@@ -148,6 +149,11 @@ public class Person implements Comparable<Person> ,Cloneable {
                     .city(this.city)
                     .address(this.address)
                     .build();
+    }
+
+    @Override
+    public Object copy() {
+        return clone();
     }
 
 
