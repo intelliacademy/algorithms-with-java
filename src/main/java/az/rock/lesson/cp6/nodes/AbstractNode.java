@@ -12,7 +12,6 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
 
     protected AbstractNode(T value,  AbstractNode<T> left, AbstractNode<T> right) {
         this.value = value;
-        this.parent = NilNode.NIL;
         this.left = left;
         this.right = right;
     }

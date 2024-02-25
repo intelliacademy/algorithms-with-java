@@ -6,7 +6,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
-    private AbstractNode<T> root = NilNode.<T>getRootReference();
+    private AbstractNode<T> root = NilNode.NIL;
 
     public RedBlackTree() {}
 
@@ -58,12 +58,12 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         node.setParent(tempRightChild);
         tempRightChild.setParent(tempParent);
 
-        if(!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getLeftChild() == node)
+        if(tempRightChild.getParent() != null && tempRightChild.getParent().getLeftChild() == node)
             tempRightChild.getParent().setLeftChild(tempRightChild);
-        else if (!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getRightChild() == node)
+        else if (tempRightChild.getParent() != null && tempRightChild.getParent().getRightChild() == node)
             tempRightChild.getParent().setRightChild(tempRightChild);
 
-        if (node.equals(this.root)) this.root = tempRightChild;
+        if (node == this.root) this.root = tempRightChild;
         node.updateHeight();
         tempRightChild.updateHeight();
     }
@@ -80,9 +80,9 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         node.setParent(tempLeftChild);
         tempLeftChild.setParent(tempParent);
 
-        if(!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getLeftChild() == node)
+        if(tempLeftChild.getParent() != null && tempLeftChild.getParent().getLeftChild() == node)
             tempLeftChild.getParent().setLeftChild(tempLeftChild);
-        else if (!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getRightChild()  == node)
+        else if (tempLeftChild.getParent() != null && tempLeftChild.getParent().getRightChild()  == node)
             tempLeftChild.getParent().setRightChild(tempLeftChild);
 
         if (node == this.root) this.root = tempLeftChild;
