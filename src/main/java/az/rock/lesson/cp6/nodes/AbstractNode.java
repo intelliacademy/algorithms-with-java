@@ -10,9 +10,8 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
     private AbstractNode<T> left;
     private AbstractNode<T> right;
 
-    protected AbstractNode(T value, AbstractNode<T> parent, AbstractNode<T> left, AbstractNode<T> right) {
+    protected AbstractNode(T value,  AbstractNode<T> left, AbstractNode<T> right) {
         this.value = value;
-        this.parent = parent;
         this.left = left;
         this.right = right;
     }

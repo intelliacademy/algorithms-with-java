@@ -5,11 +5,11 @@ import java.util.function.BiFunction;
 public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
     public static NilNode NIL;
     public NilNode(AbstractNode<T> parent) {
-        super(null, parent, null, null);
+        super(null, null, null);
     }
 
     public NilNode() {
-        super(null, null, null, null);
+        super(null, null, null);
     }
 
     public static <T extends Comparable<T>> NilNode<T> getInstance(BlackNode<T> parent) {

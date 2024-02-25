@@ -1,8 +1,8 @@
 package az.rock.lesson.cp6.nodes;
 
 public class Node<T extends Comparable<T>> extends AbstractNode<T> {
-    public Node(T value, AbstractNode<T> parent, AbstractNode<T> left, AbstractNode<T> right) {
-        super(value, parent, left, right);
+    public Node(T value,  AbstractNode<T> left, AbstractNode<T> right) {
+        super(value, left, right);
     }
 
     @Override
@@ -66,14 +66,14 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
     @Override
     public RedNode<T> toRedNode() {
         if (!(this instanceof RedNode))
-            return new RedNode<T>(this.getValue(), this.getParent(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
+            return new RedNode<T>(this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
         else return (RedNode<T>) this;
     }
 
     @Override
     public BlackNode<T> toBlackNode() {
         if (!(this instanceof BlackNode))
-            return new BlackNode<T>(this.getValue(), this.getParent(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
+            return new BlackNode<T>(this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
         else return (BlackNode<T>) this;
     }
 }
