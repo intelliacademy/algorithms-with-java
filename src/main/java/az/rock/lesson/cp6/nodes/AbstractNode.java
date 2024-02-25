@@ -17,6 +17,11 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         this.right = right;
     }
 
+    @Override
+    public int compareTo(AbstractNode<T> o) {
+        return this.value.compareTo(o.value);
+    }
+
     public Boolean isBalanced() {
         return Math.abs(this.left.getHeight() - this.right.getHeight()) <= 1;
     }

@@ -14,7 +14,7 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
 
     @Override
     public AbstractNode<T> insert(AbstractNode<T> parent,T data) {
-        AbstractNode<T> node = new RedNode<T>(data,NilNode.NIL,NilNode.NIL);
+        AbstractNode<T> node = new RedNode<T>(data);
         if (node.isLessThan(this)){
             if (this.getLeftChild().isEmpty()){
                 this.setLeftChild(node);
