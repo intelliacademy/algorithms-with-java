@@ -15,9 +15,7 @@ public class Chapter6_RedBlackTree {
             tree.insert(number);
         }
 
+        System.out.println("Tree: " + tree);
 
-
-        var result = tree.reduce(Integer::sum);
-        System.out.println("Result: " + result);
     }
 }

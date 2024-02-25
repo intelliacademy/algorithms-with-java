@@ -6,7 +6,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
-    private AbstractNode<T> root = NilNode.<T>getInstance();
+    private AbstractNode<T> root = NilNode.<T>getRootReference();
 
     public RedBlackTree() {}
 
@@ -15,14 +15,14 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         if (this.root.isEmpty()){
             this.root = new BlackNode<>(data, NilNode.getRootReference(), NilNode.<T>getInstance(), NilNode.<T>getInstance());
         } else {
-            var result = this.root.insert(new RedNode<>(data, root, NilNode.<T>getInstance(), NilNode.<T>getInstance()));
+            var result = this.root.insert(this.root,new RedNode<>(data, root, NilNode.<T>getInstance(), NilNode.<T>getInstance()));
             result.updateHeight();
             this.settleViolations(result);
         }
     }
 
     private void settleViolations(AbstractNode<T> node) {
-        while(node != null && !node.equals(NilNode.getRootReference())) {
+        while(node != null) {
             node.updateHeight();
             this.settleViolation(node);
             node = node.getParent();
@@ -33,12 +33,12 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         node.updateHeight();
         if (node.isLeftHeavy()){
             if (node.getLeftChild().isRightHeavy()){
-                rotateLeft(node.getLeftChild());
+                this.rotateLeft(node.getLeftChild());
             }
             this.rotateRight(node);
         } else if (node.isRightHeavy()){
             if (node.getRightChild().isLeftHeavy()){
-                rotateRight(node.getRightChild());
+                this.rotateRight(node.getRightChild());
             }
             this.rotateLeft(node);
         }

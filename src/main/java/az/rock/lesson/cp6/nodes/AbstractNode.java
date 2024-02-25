@@ -4,12 +4,18 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public abstract class AbstractNode<T extends Comparable<T>>  implements Comparable<AbstractNode<T>> {
+    private int height = 0;
     private final T value;
     private AbstractNode<T> parent;
     private AbstractNode<T> left;
     private AbstractNode<T> right;
 
-    private int height = 0;
+    protected AbstractNode(T value, AbstractNode<T> parent, AbstractNode<T> left, AbstractNode<T> right) {
+        this.value = value;
+        this.parent = parent;
+        this.left = left;
+        this.right = right;
+    }
 
     public Boolean isBalanced() {
         return Math.abs(this.left.getHeight() - this.right.getHeight()) <= 1;
@@ -33,13 +39,6 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
 
     public Integer getBalance(){
         return this.left.getHeight() - this.right.getHeight();
-    }
-
-    protected AbstractNode(T value, AbstractNode<T> parent, AbstractNode<T> left, AbstractNode<T> right) {
-        this.value = value;
-        this.parent = parent;
-        this.left = left;
-        this.right = right;
     }
 
     public T reduce(BiFunction<T, T, T> function){
@@ -109,7 +108,7 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         return this.isLessThan(node) || this.isEqualTo(node);
     }
 
-    public abstract AbstractNode<T> insert(AbstractNode<T> node);
+    public abstract AbstractNode<T> insert(AbstractNode<T> parent,AbstractNode<T> node);
 
     public abstract AbstractNode<T> remove(T data);
 

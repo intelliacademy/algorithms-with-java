@@ -11,22 +11,23 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
     }
 
     @Override
-    public AbstractNode<T> insert(AbstractNode<T> node) {
+    public AbstractNode<T> insert(AbstractNode<T> parent,AbstractNode<T> node) {
+        this.setParent(parent);
         if (node.isGreaterOrEqualsThan(this)) {
             if(this.hasRight()){
-                return this.getRightChild().insert(node);
+                return this.getRightChild().insert(this,node);
             } else {
                 node.setParent(this);
                 this.setRightChild(node);
-                return node;
+                return this;
             }
         } else {
             if(this.hasLeft()){
-                return this.getLeftChild().insert(node);
+                return this.getLeftChild().insert(this,node);
             } else {
                 node.setParent(this);
                 this.setLeftChild(node);
-                return node;
+                return this;
             }
         }
     }
