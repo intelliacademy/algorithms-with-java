@@ -3,7 +3,7 @@ package az.rock.lesson.cp6.nodes;
 import java.util.function.BiFunction;
 
 public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
-    public static NilNode NIL;
+    public static NilNode NIL = new NilNode();
     public NilNode(AbstractNode<T> parent) {
         super(null, null, null);
     }

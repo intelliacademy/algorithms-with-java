@@ -23,9 +23,6 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
     }
 
 
-
-
-
     @Override
     public void remove(T data) {
 
