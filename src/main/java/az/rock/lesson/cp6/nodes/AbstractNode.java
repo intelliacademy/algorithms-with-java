@@ -108,7 +108,7 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         return this.isLessThan(node) || this.isEqualTo(node);
     }
 
-    public abstract AbstractNode<T> insert(AbstractNode<T> parent,AbstractNode<T> node);
+    public abstract AbstractNode<T> insert(AbstractNode<T> parent,T data);
 
     public abstract AbstractNode<T> remove(T data);
 

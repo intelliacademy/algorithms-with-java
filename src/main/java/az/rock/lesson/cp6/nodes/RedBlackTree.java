@@ -15,7 +15,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         if (this.root.isEmpty()){
             this.root = new BlackNode<>(data, NilNode.<T>getInstance(), NilNode.<T>getInstance());
         } else {
-            var result = this.root.insert(this.root,new RedNode<>(data, NilNode.<T>getInstance(), NilNode.<T>getInstance()));
+            var result = this.root.insert(this.root,data);
             result.updateHeight();
             this.settleViolations(result);
         }

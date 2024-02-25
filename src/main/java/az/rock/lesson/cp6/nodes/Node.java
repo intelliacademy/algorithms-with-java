@@ -1,5 +1,7 @@
 package az.rock.lesson.cp6.nodes;
 
+import az.rock.lesson.cp5.nodes.AVLNode;
+
 public class Node<T extends Comparable<T>> extends AbstractNode<T> {
     public Node(T value,  AbstractNode<T> left, AbstractNode<T> right) {
         super(value, left, right);
@@ -11,23 +13,23 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
     }
 
     @Override
-    public AbstractNode<T> insert(AbstractNode<T> parent,AbstractNode<T> node) {
-        this.setParent(parent);
-        if (node.isGreaterOrEqualsThan(this)) {
-            if(this.hasRight()){
-                return this.getRightChild().insert(this,node);
-            } else {
-                node.setParent(this);
-                this.setRightChild(node);
-                return this;
-            }
-        } else {
-            if(this.hasLeft()){
-                return this.getLeftChild().insert(this,node);
-            } else {
-                node.setParent(this);
+    public AbstractNode<T> insert(AbstractNode<T> parent,T data) {
+        AbstractNode<T> node = new RedNode<T>(data,NilNode.NIL,NilNode.NIL);
+        if (node.isLessThan(this)){
+            if (this.getLeftChild().isEmpty()){
                 this.setLeftChild(node);
+                node.setParent(this);
                 return this;
+            }else {
+                return this.getLeftChild().insert(this,data);
+            }
+        }else {
+            if (this.getRightChild().isEmpty()){
+                this.setRightChild(node);
+                node.setParent(this);
+                return this;
+            }else {
+                return this.getRightChild().insert(this,data);
             }
         }
     }
