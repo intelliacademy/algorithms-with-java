@@ -23,7 +23,6 @@ import java.util.Objects;
  */
 
 public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>, Cloneable<AbstractNode<T>> {
-    protected AbstractNode<T> root;
 
     protected T data;
     protected AbstractNode<T> parent;
@@ -36,19 +35,15 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
     }
 
 
-    public AbstractNode(AbstractNode<T> root,T data) {
-        this(root,data, NillNode.getInstance(), NillNode.getInstance(), NillNode.getInstance());
+    public AbstractNode(T data) {
+        this(data, NillNode.getInstance(), NillNode.getInstance());
     }
 
-    public AbstractNode(AbstractNode<T> root,T data, AbstractNode<T> parent) {
-        this(root,data, parent, NillNode.getInstance(), NillNode.getInstance());
-    }
 
-    public AbstractNode(AbstractNode<T> root,T data, AbstractNode<T> parent,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
+    public AbstractNode(T data, AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
         this();
-        this.root = root;
         this.data = data;
-        this.parent = parent;
+        this.parent = null;
         this.leftChild = leftChild;
         this.rightChild = rightChild;
     }
@@ -115,7 +110,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
     }
 
     public Integer getHeight() {
-        return height;
+        return this.height;
     }
 
     @Override

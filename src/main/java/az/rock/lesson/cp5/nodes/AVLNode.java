@@ -5,21 +5,17 @@ import java.util.function.Consumer;
 
 
 public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
-
     public AVLNode(T data) {
-        super(NillNode.getInstance(),data);
+        super(data);
     }
 
-    public AVLNode(AbstractNode<T> root,T data) {
-        super(root,data);
+    public AVLNode(T data,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
+        super(data, leftChild, rightChild);
     }
 
-    public AVLNode(AbstractNode<T> root,T data, AbstractNode<T> parent) {
-        super(root,data, parent);
-    }
-
-    public AVLNode(AbstractNode<T> root,T data, AbstractNode<T> parent,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
-        super(root,data, parent, leftChild, rightChild);
+    public AVLNode(AbstractNode<T> parent,T data,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
+        super(data, leftChild, rightChild);
+        this.setParent(parent);
     }
 
 
@@ -45,6 +41,6 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
 
     @Override
     public AbstractNode<T> copy() {
-        return new AVLNode<>(this.root,this.data,this.parent,this.leftChild,this.rightChild);
+        return new AVLNode<>(this.parent,this.data,this.leftChild,this.rightChild);
     }
 }
