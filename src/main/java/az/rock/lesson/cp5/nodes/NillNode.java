@@ -45,8 +45,6 @@ public class NillNode<T extends Comparable<T>> extends AbstractNode<T>{
         return 0;
     }
 
-    @Override
-    public void updateHeight() {}
 
     @Override
     public AbstractNode<T> copy() {

@@ -28,7 +28,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
     protected AbstractNode<T> parent;
     protected AbstractNode<T> leftChild;
     protected AbstractNode<T> rightChild;
-    protected int height;
+    protected int height = -1;
 
     public AbstractNode() {
     }
@@ -118,7 +118,7 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
 
     @Override
     public Boolean isBalanced() {
-        return Math.abs(this.leftChild.getHeight() - this.rightChild.getHeight()) <= 1;
+        return Math.abs(this.leftChild.getHeight() - this.rightChild.getHeight()) < 1;
     }
 
     @Override

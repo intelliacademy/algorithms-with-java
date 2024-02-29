@@ -12,6 +12,5 @@ public class Chapter5_AVLTree {
             tree.insert(number);
         }
 
-        System.out.println(tree);
     }
 }
