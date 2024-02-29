@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 public interface Node <T extends Comparable<T>> extends Comparable<Node<T>> {
     T getData();
 
-    AbstractNode<T> insert(AbstractNode<T> parent, T data);
+    AbstractNode<T> insert(T data);
 
     void remove(T data);
 
@@ -65,5 +65,4 @@ public interface Node <T extends Comparable<T>> extends Comparable<Node<T>> {
 
     Integer getBalance();
 
-    void setBalance(int balance);
 }

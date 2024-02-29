@@ -3,6 +3,7 @@ package az.rock.lesson.cp5.nodes;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+
 public class AVLTree<T extends Comparable<T>> implements Tree<T>{
     private AbstractNode<T> root = NillNode.getInstance();
 
@@ -11,30 +12,29 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
         if (root.isEmpty()) {
             root = new AVLNode<>(data);
         } else {
-            var result = root.insert(root,data);
+            var result = root.insert(data);
             result.updateHeight();
-            this.settleViolations(result);
+            this.reBalance(result);
         }
     }
 
-    private void settleViolations(AbstractNode<T> node) {
+    private void reBalance(AbstractNode<T> node) {
         while(node != null) {
             node.updateHeight();
-            this.settleViolation(node);
+            this.reBalancing(node);
             node = node.getParent();
         }
     }
 
-    public void settleViolation(AbstractNode<T> node) {
-        node.updateHeight();
+    public void reBalancing(AbstractNode<T> node) {
         if (node.isLeftHeavy()){
             if (node.leftChild.isRightHeavy()){
-                rotateLeft(node.leftChild);
+                this.rotateLeft(node.leftChild);
             }
             this.rotateRight(node);
         } else if (node.isRightHeavy()){
             if (node.rightChild.isLeftHeavy()){
-                rotateRight(node.rightChild);
+                this.rotateRight(node.rightChild);
             }
             this.rotateLeft(node);
         }
@@ -68,26 +68,27 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
 
 
     public void rotateLeft(AbstractNode<T> node) {
+        System.out.println("rotate left");
         var tempRightChild = node.getRightChild();
-        var grandChildOfTempRightChild = tempRightChild.leftChild;
+        var grandChildOfTempRightChild = tempRightChild.getLeftChild();
         tempRightChild.setLeftChild(node);
         node.setRightChild(grandChildOfTempRightChild);
 
-        if (!grandChildOfTempRightChild.isEmpty()){
+        if (grandChildOfTempRightChild !=null && !grandChildOfTempRightChild.isEmpty()){
             grandChildOfTempRightChild.setParent(node);
         }
 
-        var tempParent = node.parent;
+        var tempParent = node.getParent();
         node.setParent(tempRightChild);
         tempRightChild.setParent(tempParent);
 
-        if(!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getLeftChild() == node){
-            tempRightChild.getParent().leftChild = tempRightChild;
-        } else if (!tempRightChild.getParent().isEmpty() && tempRightChild.getParent().getRightChild() == (node)){
-            tempRightChild.getParent().rightChild = tempRightChild;
+        if(tempRightChild.getParent() != null && tempRightChild.getParent().getLeftChild() == node){
+            tempRightChild.getParent().setLeftChild(tempRightChild);
+        } else if (tempRightChild.getParent() != null  && tempRightChild.getParent().getRightChild() == node){
+            tempRightChild.getParent().setRightChild(tempRightChild);
         }
 
-        if (node.equals(this.root)){
+        if (node == this.root){
             this.root = tempRightChild;
         }
 
@@ -96,23 +97,24 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
     }
 
     public void rotateRight(AbstractNode<T> node) {
-        var tempLeftChild = node.leftChild;
-        var grandChildOfTempLeftChild = tempLeftChild.rightChild;
-        tempLeftChild.rightChild = node;
-        node.leftChild = grandChildOfTempLeftChild;
+        System.out.println("rotate right");
+        var tempLeftChild = node.getLeftChild();
+        var grandChildOfTempLeftChild = tempLeftChild.getRightChild();
+        tempLeftChild.setRightChild(node);
+        node.setLeftChild(grandChildOfTempLeftChild);
 
-        if (!grandChildOfTempLeftChild.isEmpty()){
+        if (grandChildOfTempLeftChild != null && !grandChildOfTempLeftChild.isEmpty()){
             grandChildOfTempLeftChild.setParent(node);
         }
 
-        var tempParent = node.parent;
+        var tempParent = node.getParent();
         node.setParent(tempLeftChild);
         tempLeftChild.setParent(tempParent);
 
-        if(!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getLeftChild() == node){
-            tempLeftChild.getParent().leftChild = tempLeftChild;
-        } else if (!tempLeftChild.getParent().isEmpty() && tempLeftChild.getParent().getRightChild()  == node){
-            tempLeftChild.getParent().rightChild = tempLeftChild;
+        if(tempLeftChild.getParent() != null && tempLeftChild.getParent().getLeftChild() == node){
+            tempLeftChild.getParent().setLeftChild(tempLeftChild);
+        } else if (tempLeftChild.getParent() != null  && tempLeftChild.getParent().getRightChild()  == node){
+            tempLeftChild.getParent().setRightChild(tempLeftChild);
         }
 
         if (node == this.root){

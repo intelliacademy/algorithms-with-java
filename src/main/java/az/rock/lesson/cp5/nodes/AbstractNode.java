@@ -62,23 +62,23 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
     }
 
     @Override
-    public AbstractNode<T> insert(AbstractNode<T> parent, T data) {
+    public AbstractNode<T> insert(T data) {
         var node = new AVLNode<>(data);
         if (node.isLessThan(this)) {
             if (this.leftChild.isEmpty()) {
                 this.leftChild = node;
                 node.setParent(this);
-                return this;
+                return node;
             } else {
-                return this.leftChild.insert(this,data);
+                return this.leftChild.insert(data);
             }
         } else {
             if (this.rightChild.isEmpty()) {
                 this.rightChild = node;
                 node.setParent(this);
-                return this;
+                return node;
             } else {
-                return this.rightChild.insert(this,data);
+                return this.rightChild.insert(data);
             }
         }
     }
@@ -93,23 +93,12 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
                 "\n}";
     }
 
-    @Override
-    public void setBalance(int balance) {
-
-    }
-
 
     @Override
     public Integer getBalance() {
         return this.leftChild.getHeight() - this.rightChild.getHeight();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AbstractNode<?> that)) return false;
-        return Objects.equals(getHeight(), that.getHeight()) && Objects.equals(root, that.root) && Objects.equals(getData(), that.getData()) && Objects.equals(getParent(), that.getParent()) && Objects.equals(getLeftChild(), that.getLeftChild()) && Objects.equals(getRightChild(), that.getRightChild());
-    }
 
     @Override
     public int hashCode() {
@@ -181,5 +170,6 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
     public AbstractNode<T> getRightChild() {
         return rightChild;
     }
+
 
 }
