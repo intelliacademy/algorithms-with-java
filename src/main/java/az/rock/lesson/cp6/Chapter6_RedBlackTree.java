@@ -1,7 +1,6 @@
 package az.rock.lesson.cp6;
 
-import az.rock.lesson.cp5.nodes.AVLTree;
-import az.rock.lesson.cp5.nodes.Tree;
+import az.rock.lesson.cp6.nodes.Tree;
 import az.rock.lesson.cp6.nodes.RedBlackTree;
 
 public class Chapter6_RedBlackTree {

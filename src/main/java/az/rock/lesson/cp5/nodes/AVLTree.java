@@ -1,10 +1,12 @@
 package az.rock.lesson.cp5.nodes;
 
+import az.rock.lesson.cp6.nodes.Tree;
+
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 
-public class AVLTree<T extends Comparable<T>> implements Tree<T>{
+public class AVLTree<T extends Comparable<T>> implements Tree<T> {
     private AbstractNode<T> root = NillNode.getInstance();
 
     @Override

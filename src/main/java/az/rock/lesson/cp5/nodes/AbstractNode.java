@@ -31,7 +31,6 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
     protected int height;
 
     public AbstractNode() {
-        this.height = -1;
     }
 
 
@@ -41,7 +40,6 @@ public abstract class AbstractNode <T extends Comparable<T>> implements Node<T>,
 
 
     public AbstractNode(T data, AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
-        this();
         this.data = data;
         this.parent = null;
         this.leftChild = leftChild;

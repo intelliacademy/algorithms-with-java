@@ -10,6 +10,10 @@ public class NillNode<T extends Comparable<T>> extends AbstractNode<T>{
         return EMPTY_NODE;
     }
 
+    public NillNode(){
+        this.height = -1;
+    }
+
     @Override
     public Boolean isEmpty() {
         return Boolean.TRUE;
@@ -17,7 +21,7 @@ public class NillNode<T extends Comparable<T>> extends AbstractNode<T>{
 
     @Override
     public Integer getHeight() {
-        return -1;
+        return this.height;
     }
 
     @Override

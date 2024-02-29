@@ -1,7 +1,7 @@
 package az.rock.lesson.cp5;
 
 import az.rock.lesson.cp5.nodes.AVLTree;
-import az.rock.lesson.cp5.nodes.Tree;
+import az.rock.lesson.cp6.nodes.Tree;
 
 public class Chapter5_AVLTree {
     public static void main(String[] args) {

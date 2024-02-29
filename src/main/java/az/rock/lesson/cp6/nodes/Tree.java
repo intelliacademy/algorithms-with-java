@@ -1,4 +1,4 @@
-package az.rock.lesson.cp5.nodes;
+package az.rock.lesson.cp6.nodes;
 
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
