@@ -39,9 +39,7 @@ public interface Node <T extends Comparable<T>> extends Comparable<Node<T>> {
 
     Boolean hasRightChild();
 
-    default Boolean isEmpty() {
-        return Boolean.FALSE;
-    }
+    Boolean isEmpty();
 
     Boolean hasAnyChild();
 

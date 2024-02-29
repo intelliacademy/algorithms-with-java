@@ -13,31 +13,32 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
             root = new AVLNode<>(data);
         } else {
             var result = root.insert(data);
-            result.updateHeight();
+            //result.updateHeight();
             this.reBalance(result);
         }
     }
 
     private void reBalance(AbstractNode<T> node) {
-        while(node != null) {
+        while(node != null && !node.isEmpty()) {
             node.updateHeight();
             this.reBalancing(node);
             node = node.getParent();
         }
     }
 
-    public void reBalancing(AbstractNode<T> node) {
+    public AbstractNode<T> reBalancing(AbstractNode<T> node) {
         if (node.isLeftHeavy()){
             if (node.leftChild.isRightHeavy()){
-                this.rotateLeft(node.leftChild);
+                node.leftChild = this.rotateLeft(node.leftChild);
             }
-            this.rotateRight(node);
+            node = this.rotateRight(node);
         } else if (node.isRightHeavy()){
             if (node.rightChild.isLeftHeavy()){
-                this.rotateRight(node.rightChild);
+                node.rightChild = this.rotateRight(node.rightChild);
             }
-            this.rotateLeft(node);
+            node = this.rotateLeft(node);
         }
+        return node;
     }
 
 
@@ -67,7 +68,7 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
     }
 
 
-    public void rotateLeft(AbstractNode<T> node) {
+    public AbstractNode<T>  rotateLeft(AbstractNode<T> node) {
         System.out.println("rotate left");
         var tempRightChild = node.getRightChild();
         var grandChildOfTempRightChild = tempRightChild.getLeftChild();
@@ -88,15 +89,16 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
             tempRightChild.getParent().setRightChild(tempRightChild);
         }
 
-        if (node == this.root){
+        if (node.equals(this.root)){
             this.root = tempRightChild;
         }
 
         node.updateHeight();
         tempRightChild.updateHeight();
+        return node;
     }
 
-    public void rotateRight(AbstractNode<T> node) {
+    public AbstractNode<T>  rotateRight(AbstractNode<T> node) {
         System.out.println("rotate right");
         var tempLeftChild = node.getLeftChild();
         var grandChildOfTempLeftChild = tempLeftChild.getRightChild();
@@ -111,18 +113,19 @@ public class AVLTree<T extends Comparable<T>> implements Tree<T>{
         node.setParent(tempLeftChild);
         tempLeftChild.setParent(tempParent);
 
-        if(tempLeftChild.getParent() != null && tempLeftChild.getParent().getLeftChild() == node){
+        if(tempLeftChild.getParent() != null && tempLeftChild.getParent().getLeftChild().equals(node)){
             tempLeftChild.getParent().setLeftChild(tempLeftChild);
-        } else if (tempLeftChild.getParent() != null  && tempLeftChild.getParent().getRightChild()  == node){
+        } else if (tempLeftChild.getParent() != null  && tempLeftChild.getParent().getRightChild().equals(node)){
             tempLeftChild.getParent().setRightChild(tempLeftChild);
         }
 
-        if (node == this.root){
+        if (node.equals(this.root)){
             this.root = tempLeftChild;
         }
 
         node.updateHeight();
         tempLeftChild.updateHeight();
+        return node;
     }
 
 

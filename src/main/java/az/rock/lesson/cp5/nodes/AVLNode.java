@@ -18,6 +18,10 @@ public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
         this.setParent(parent);
     }
 
+    @Override
+    public Boolean isEmpty() {
+        return Boolean.FALSE;
+    }
 
     @Override
     public void remove(T data) {
