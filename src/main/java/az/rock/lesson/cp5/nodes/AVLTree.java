@@ -7,10 +7,15 @@ import java.util.function.Consumer;
 
 public class AVLTree <T extends Comparable<T>> implements Tree<T> {
 
+    private AVLNode<T> root = AVLNode.Nil.<T>getInstance();
 
     @Override
     public void insert(T data) {
-
+        if (this.root.isEmpty()){
+            this.root = new AVLNode<>(data);
+        }else {
+            var node = this.root.insert(data);
+        }
     }
 
     @Override

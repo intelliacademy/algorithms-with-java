@@ -1,6 +1,5 @@
 package az.rock.lesson.cp5.nodes;
 
-import az.rock.lesson.cp6.nodes.AbstractNode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +13,9 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
 
     public AVLNode(T data) {
         this.data = data;
+        this.parent = null;
+        this.left = AVLNode.Nil.getInstance();
+        this.right = AVLNode.Nil.getInstance();
     }
 
 
@@ -33,14 +35,14 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
     }
 
 
-    public static class NilNode<T extends Comparable<T>> extends AVLNode<T>{
+    public static class Nil<T extends Comparable<T>> extends AVLNode<T>{
 
-        private NilNode() {
+        private Nil() {
             super(null);
         }
 
         public static <T extends Comparable<T>> AVLNode<T> getInstance(){
-            return new NilNode<>();
+            return new Nil<>();
         }
 
         @Override
