@@ -3,7 +3,6 @@ package az.rock.lesson.cp5.nodes;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
 public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>{
     private final T data;
@@ -39,6 +38,28 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
                 return this.right.insert(data);
             }
         }
+    }
+
+    public AVLNode<T> getParent() {
+        return parent;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public AVLNode<T> getLeft() {
+        if (this.left == null){
+            this.left = AVLNode.Nil.getInstance();
+        }
+        return left;
+    }
+
+    public AVLNode<T> getRight() {
+        if (this.right == null){
+            this.right = AVLNode.Nil.getInstance();
+        }
+        return right;
     }
 
     public Boolean isGreaterThan(AVLNode<T> other){
@@ -84,14 +105,25 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
     }
 
     public int getBalanceFactor() {
-        return this.right.height - this.left.height;
+        return this.getRight().getHeight() - this.getLeft().getHeight();
+    }
+
+    public AVLNode<T> nilSafety(){
+        if (this.left == null){
+            this.left = AVLNode.Nil.getInstance();
+        }
+
+        if (this.right == null){
+            this.right = AVLNode.Nil.getInstance();
+        }
+        return this;
     }
 
     public AVLNode<T> rotateRight() {
-        var x = this.right;
-        var z = x.left;
-        x.left = this;
-        this.right = z;
+        var x = this.right.nilSafety();
+        var z = x.left.nilSafety();
+        x.left = this.nilSafety();
+        this.right = z.nilSafety();
         this.updateHeight();
         x.updateHeight();
         return x;
@@ -118,6 +150,31 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
         private Nil() {
             super(null);
             this.setHeight(-1);
+        }
+
+        @Override
+        public AVLNode<T> nilSafety() {
+            return this;
+        }
+
+        @Override
+        public void updateHeight() {
+            // do nothing
+        }
+
+        @Override
+        public boolean isLeftHeavy() {
+            return false;
+        }
+
+        @Override
+        public boolean isRightHeavy() {
+            return false;
+        }
+
+        @Override
+        public Integer getHeight() {
+            return -1;
         }
 
         @Override

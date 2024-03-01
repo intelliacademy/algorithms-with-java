@@ -25,7 +25,7 @@ public class AVLTree <T extends Comparable<T>> implements Tree<T> {
 
     public void rebalance(AVLNode<T> node){
         if (node.isLeftHeavy()){
-            if (node.getLeft().getBalanceFactor() < 0){
+            if (node.getLeft().isRightHeavy()){
                 node.setLeft(node.getLeft().rotateLeft());
             }
             this.root = node.rotateRight();
