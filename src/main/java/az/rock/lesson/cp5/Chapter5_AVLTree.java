@@ -11,6 +11,7 @@ public class Chapter5_AVLTree {
         for (Integer number : unSortedNumbersArray) {
             tree.insert(number);
         }
+        System.out.println(tree);
 
     }
 }
