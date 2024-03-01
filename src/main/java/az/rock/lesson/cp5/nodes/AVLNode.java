@@ -21,10 +21,11 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
 
     public AVLNode<T> insert(T data){
         var node = new AVLNode<>(data);
-        if (this.isLessOrEqualsThan(node)){
+        if (node.isLessOrEqualsThan(this)){
             if (this.left.isEmpty()){
                 node.setParent(this);
                 this.left = node;
+                return node;
             }else {
                 return this.left.insert(data);
             }
@@ -32,11 +33,11 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
             if (this.right.isEmpty()){
                 node.setParent(this);
                 this.right = node;
+                return node;
             }else {
                 return this.right.insert(data);
             }
         }
-        return node;
     }
 
     public Boolean isGreaterThan(AVLNode<T> other){
@@ -68,15 +69,15 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
     public String toString() {
         return "AVLNode{" +
                 "data=" + data +
-                ", parent=" + parent +
-                ", left=" + left +
-                ", right=" + right +
+                ", left=" + left.data +
+                ", right=" + right.data +
                 "\n}";
     }
 
     public static class Nil<T extends Comparable<T>> extends AVLNode<T>{
 
         public static final Nil NIL = new Nil();
+
         private Nil() {
             super(null);
         }
@@ -88,6 +89,11 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
         @Override
         public Boolean isEmpty() {
             return Boolean.TRUE;
+        }
+
+        @Override
+        public String toString() {
+            return "NIL";
         }
     }
 }
