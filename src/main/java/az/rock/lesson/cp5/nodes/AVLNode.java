@@ -10,6 +10,7 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
     private AVLNode<T> parent;
     private AVLNode<T> left;
     private AVLNode<T> right;
+    private Integer height;
 
     public AVLNode(T data) {
         this.data = data;
@@ -74,12 +75,54 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
                 "\n}";
     }
 
+    public boolean isLeftHeavy() {
+        return this.getBalanceFactor() > 1;
+    }
+
+    public boolean isRightHeavy() {
+        return this.getBalanceFactor() < -1;
+    }
+
+    public int getBalanceFactor() {
+        return this.right.height - this.left.height;
+    }
+
+    public AVLNode<T> rotateRight() {
+        var x = this.right;
+        var z = x.left;
+        x.left = this;
+        this.right = z;
+        this.updateHeight();
+        x.updateHeight();
+        return x;
+    }
+
+    public AVLNode<T> rotateLeft() {
+        var x = this.left;
+        var z = x.right;
+        x.right = this;
+        this.left = z;
+        this.updateHeight();
+        x.updateHeight();
+        return x;
+    }
+
+    public void updateHeight() {
+        this.height = Math.max(this.left.height, this.right.height) + 1;
+    }
+
     public static class Nil<T extends Comparable<T>> extends AVLNode<T>{
 
         public static final Nil NIL = new Nil();
 
         private Nil() {
             super(null);
+            this.setHeight(-1);
+        }
+
+        @Override
+        public int getBalanceFactor() {
+            return 0;
         }
 
         public static <T extends Comparable<T>> AVLNode<T> getInstance(){
