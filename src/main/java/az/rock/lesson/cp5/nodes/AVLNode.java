@@ -1,50 +1,51 @@
 package az.rock.lesson.cp5.nodes;
 
-import java.util.function.Consumer;
+import az.rock.lesson.cp6.nodes.AbstractNode;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>{
+    private final T data;
+    private AVLNode<T> parent;
+    private AVLNode<T> left;
+    private AVLNode<T> right;
 
-
-public class AVLNode<T extends Comparable<T>> extends AbstractNode<T> {
     public AVLNode(T data) {
-        super(data);
+        this.data = data;
     }
 
-    public AVLNode(T data,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
-        super(data, leftChild, rightChild);
+
+    public AVLNode<T> insert(T data){
+
+        return null;
     }
 
-    public AVLNode(AbstractNode<T> parent,T data,AbstractNode<T> leftChild, AbstractNode<T> rightChild) {
-        super(data, leftChild, rightChild);
-        this.setParent(parent);
-    }
 
-    @Override
-    public Boolean isEmpty() {
+    public Boolean isEmpty(){
         return Boolean.FALSE;
     }
 
     @Override
-    public void remove(T data) {
-
+    public int compareTo(AVLNode<T> o) {
+        return this.data.compareTo(o.data);
     }
 
-    @Override
-    public void traversal(Consumer<T> consumer) {
 
-    }
+    public static class NilNode<T extends Comparable<T>> extends AVLNode<T>{
 
-    @Override
-    public T getMaxValue() {
-        return null;
-    }
+        private NilNode() {
+            super(null);
+        }
 
-    @Override
-    public T getMinValue() {
-        return null;
-    }
+        public static <T extends Comparable<T>> AVLNode<T> getInstance(){
+            return new NilNode<>();
+        }
 
-    @Override
-    public AbstractNode<T> copy() {
-        return new AVLNode<>(this.parent,this.data,this.leftChild,this.rightChild);
+        @Override
+        public Boolean isEmpty() {
+            return Boolean.TRUE;
+        }
     }
 }
