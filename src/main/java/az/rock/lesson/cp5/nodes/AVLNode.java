@@ -26,7 +26,7 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
             if (this.left.isEmpty()){
                 node.setParent(this);
                 this.left = node;
-                return node;
+                return this.rebalance(node);
             }else {
                 return this.left.insert(data);
             }
@@ -34,12 +34,36 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
             if (this.right.isEmpty()){
                 node.setParent(this);
                 this.right = node;
-                return node;
+                return this.rebalance(node);
             }else {
                 return this.right.insert(data);
             }
         }
     }
+
+    public AVLNode<T> rebalance(AVLNode<T> node){
+        if (node.isLeftHeavy()){
+            if (node.getLeft().isRightHeavy()) {
+                node.setLeft(this.leftRotation(node));
+            }
+            return this.rightRotation(node);
+        }
+        if (node.isRightHeavy()){
+            if (node.getRight().isLeftHeavy()) node.setRight(this.rightRotation(node));
+            return this.leftRotation(node);
+        }
+        return node;
+    }
+
+    public AVLNode<T>  rightRotation(AVLNode<T> node){
+        return node;
+    }
+
+    public AVLNode<T>  leftRotation(AVLNode<T> node){
+        return node;
+    }
+
+
 
     public AVLNode<T> getParent() {
         return parent;
@@ -90,11 +114,11 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
 
     @Override
     public String toString() {
-        return "AVLNode{" +
-                "data=" + data +
-                ", left=" + left.data +
-                ", right=" + right.data +
-                "\n}";
+        return " Node[" +
+                " data= " + data +
+                ", left= " + left.data +
+                ", right= " + right.data +
+                "\n]";
     }
 
     public boolean isLeftHeavy() {
@@ -106,7 +130,7 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
     }
 
     public int getBalanceFactor() {
-        return this.getRight().getHeight() - this.getLeft().getHeight();
+        return this.right.getHeight() - this.left.getHeight();
     }
 
     public AVLNode<T> nilSafety(){
@@ -118,26 +142,6 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
             this.right = AVLNode.Nil.getInstance();
         }
         return this;
-    }
-
-    public AVLNode<T> rotateRight() {
-        var x = this.right.nilSafety();
-        var z = x.left.nilSafety();
-        x.left = this.nilSafety();
-        this.right = z.nilSafety();
-        this.updateHeight();
-        x.updateHeight();
-        return x;
-    }
-
-    public AVLNode<T> rotateLeft() {
-        var x = this.left;
-        var z = x.right;
-        x.right = this;
-        this.left = z;
-        this.updateHeight();
-        x.updateHeight();
-        return x;
     }
 
     public void updateHeight() {

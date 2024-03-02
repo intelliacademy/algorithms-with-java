@@ -13,29 +13,17 @@ public class AVLTree <T extends Comparable<T>> implements Tree<T> {
     public void insert(T data) {
         if (this.root.isEmpty()){
             this.root = new AVLNode<>(data);
+            this.root.updateHeight();
         }else {
             var node = this.root.insert(data);
-            while (node != null){
-                rebalance(node);
-                node = node.getParent();
-            }
+//            while (node != null){
+//                node.updateHeight();
+//                this.rebalance(node);
+//                node = node.getParent();
+//            }
         }
     }
 
-
-    public void rebalance(AVLNode<T> node){
-        if (node.isLeftHeavy()){
-            if (node.getLeft().isRightHeavy()){
-                node.setLeft(node.getLeft().rotateLeft());
-            }
-            this.root = node.rotateRight();
-        }else if (node.isRightHeavy()){
-            if (node.getRight().getBalanceFactor() > 0){
-                node.setRight(node.getRight().rotateRight());
-            }
-            this.root = node.rotateLeft();
-        }
-    }
 
     @Override
     public void remove(T data) {
