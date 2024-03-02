@@ -19,6 +19,7 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
     }
 
 
+
     public AVLNode<T> insert(T data){
         var node = new AVLNode<>(data);
         if (this.isLessOrEqualsThan(node)){
