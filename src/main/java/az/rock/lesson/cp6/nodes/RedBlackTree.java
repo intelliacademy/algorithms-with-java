@@ -1,5 +1,7 @@
 package az.rock.lesson.cp6.nodes;
 
+import az.rock.lesson.util.Tree;
+
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
