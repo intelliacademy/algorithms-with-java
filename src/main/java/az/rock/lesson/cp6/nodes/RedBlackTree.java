@@ -6,7 +6,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
-    private AbstractNode<T> root = NilNode.NIL;
+    private AbstractNode<T> root = BlackNode.NilNode.NIL;
 
     public RedBlackTree() {}
 

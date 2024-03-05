@@ -18,8 +18,8 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
 
     protected AbstractNode(T value) {
         this.value = value;
-        this.left = NilNode.getInstance(this);
-        this.right = NilNode.getInstance(this);
+        this.left = BlackNode.NilNode.getInstance(this);
+        this.right = BlackNode.NilNode.getInstance(this);
     }
 
     @Override
@@ -36,9 +36,6 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         return this.value.compareTo(o.value);
     }
 
-    public Boolean isBalanced() {
-        return Math.abs(this.left.getHeight() - this.right.getHeight()) <= 1;
-    }
 
     public int getHeight() {
         return height;
@@ -131,13 +128,6 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
 
     public abstract AbstractNode<T> remove(T data);
 
-    public abstract AbstractNode<T> balance();
-
-    public abstract AbstractNode<T> rotateLeft();
-
-    public abstract AbstractNode<T> rotateRight();
-
-    public abstract AbstractNode<T> getGrandParent();
 
     public abstract RedNode<T> toRedNode();
 
@@ -175,20 +165,81 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
     }
 
     public Boolean isLeaf() {
-        return this.left instanceof NilNode<T> && this.right instanceof NilNode<T>;
+        return this.left instanceof BlackNode.NilNode<T> && this.right instanceof BlackNode.NilNode<T>;
     }
 
     public Boolean hasLeft() {
-        return this.left != null && !(this.left instanceof NilNode<T>);
+        return this.left != null && !(this.left instanceof BlackNode.NilNode<T>);
     }
 
     public Boolean hasRight() {
-        return this.left != null && !(this.right instanceof NilNode<T>);
+        return this.left != null && !(this.right instanceof BlackNode.NilNode<T>);
     }
 
     public Boolean isEmpty() {
-        return this instanceof NilNode;
+        return this instanceof BlackNode.NilNode;
     }
 
 
+    public static class Node<T extends Comparable<T>> extends AbstractNode<T> {
+        public Node(T value,  AbstractNode<T> left, AbstractNode<T> right) {
+            super(value, left, right);
+        }
+
+        public Node(T value) {
+            super(value);
+        }
+
+        @Override
+        public int compareTo(AbstractNode<T> o) {
+            return this.getValue().compareTo(o.getValue());
+        }
+
+        @Override
+        public AbstractNode<T> insert(T data) {
+            AbstractNode<T> node = new RedNode<T>(data);
+            if (node.isLessThan(this)){
+                if (this.getLeftChild().isEmpty()){
+                    this.setLeftChild(node);
+                    node.setParent(this);
+                    return this;
+                }else {
+                    return this.getLeftChild().insert(data);
+                }
+            }else {
+                if (this.getRightChild().isEmpty()){
+                    this.setRightChild(node);
+                    node.setParent(this);
+                    return this;
+                }else {
+                    return this.getRightChild().insert(data);
+                }
+            }
+        }
+
+        @Override
+        public AbstractNode<T> remove(T data) {
+            return null;
+        }
+
+
+        @Override
+        public AbstractNode<T> reColor() {
+            return null;
+        }
+
+        @Override
+        public RedNode<T> toRedNode() {
+            if (!(this instanceof RedNode))
+                return new RedNode<T>(this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
+            else return (RedNode<T>) this;
+        }
+
+        @Override
+        public BlackNode<T> toBlackNode() {
+            if (!(this instanceof BlackNode))
+                return new BlackNode<T>(this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
+            else return (BlackNode<T>) this;
+        }
+    }
 }
