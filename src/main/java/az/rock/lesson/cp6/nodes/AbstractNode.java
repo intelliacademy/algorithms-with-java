@@ -171,13 +171,24 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
     public Boolean hasLeft() {
         return this.left != null && !(this.left instanceof BlackNode.NilNode<T>);
     }
-
     public Boolean hasRight() {
         return this.left != null && !(this.right instanceof BlackNode.NilNode<T>);
     }
 
     public Boolean isEmpty() {
         return this instanceof BlackNode.NilNode;
+    }
+
+    public T getMax() {
+        if (this.hasRight()) {
+            return this.getRightChild().getMax();
+        }else return this.getValue();
+    }
+
+    public T getMin() {
+        if (this.hasLeft()) {
+            return this.getLeftChild().getMin();
+        }else return this.getValue();
     }
 
 
@@ -215,6 +226,18 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
                     return this.getRightChild().insert(data);
                 }
             }
+        }
+
+        public Boolean isRed() {
+            return this instanceof RedNode;
+        }
+
+        public Boolean isBlack() {
+            return this instanceof BlackNode;
+        }
+
+        public Boolean isNil() {
+            return this instanceof BlackNode.NilNode;
         }
 
         @Override

@@ -26,10 +26,7 @@ public class BlackNode<T extends Comparable<T>> extends AbstractNode.Node<T> {
         }
 
         @Override
-        public void updateHeight() {
-
-        }
-
+        public void updateHeight() {}
         @Override
         public Integer getBalanceFactor() {
             return 0;
@@ -55,10 +52,6 @@ public class BlackNode<T extends Comparable<T>> extends AbstractNode.Node<T> {
         @Override
         public T reduce(BiFunction<T, T, T> function) {
             return null;
-        }
-
-        public static <T extends Comparable<T>> NilNode<T> getInstance() {
-            return new NilNode<T>();
         }
 
         @Override

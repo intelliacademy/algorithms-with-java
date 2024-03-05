@@ -18,11 +18,11 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         } else {
             var node = this.root.insert(data);
             node.updateHeight();
-            this.settleViolations(node);
+            this.startBalancing(node);
         }
     }
 
-    private void settleViolations(AbstractNode<T> node) {
+    private void startBalancing(AbstractNode<T> node) {
         while(node != null) {
             node.updateHeight();
             this.rebalancing(node);
@@ -118,11 +118,11 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
 
     @Override
     public T getMaxValue() {
-        return null;
+        return this.root.getMax();
     }
 
     @Override
     public T getMinValue() {
-        return null;
+        return this.root.getMin();
     }
 }
