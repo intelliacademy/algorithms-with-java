@@ -16,6 +16,21 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         this.right = right;
     }
 
+    protected AbstractNode(T value) {
+        this.value = value;
+        this.left = NilNode.getInstance(this);
+        this.right = NilNode.getInstance(this);
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + " {" +
+                "value=" + value.toString() +
+                ", left=" + left.toString() +
+                ", right=" + right.toString() +
+                '}';
+    }
+
     @Override
     public int compareTo(AbstractNode<T> o) {
         return this.value.compareTo(o.value);
@@ -34,14 +49,14 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
     }
 
     public Boolean isLeftHeavy() {
-        return this.getBalance() > 1;
+        return this.getBalanceFactor() < -1;
     }
 
     public Boolean isRightHeavy() {
-        return this.getBalance() < -1;
+        return this.getBalanceFactor() > 1;
     }
 
-    public Integer getBalance(){
+    public Integer getBalanceFactor(){
         return this.left.getHeight() - this.right.getHeight();
     }
 
@@ -112,7 +127,7 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         return this.isLessThan(node) || this.isEqualTo(node);
     }
 
-    public abstract AbstractNode<T> insert(AbstractNode<T> parent,T data);
+    public abstract AbstractNode<T> insert(T data);
 
     public abstract AbstractNode<T> remove(T data);
 

@@ -5,14 +5,14 @@ import java.util.function.BiFunction;
 public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
     public static NilNode NIL = new NilNode();
     public NilNode(AbstractNode<T> parent) {
-        super(null, null, null);
+        super(null, NIL, NIL);
     }
 
     public NilNode() {
         super(null, null, null);
     }
 
-    public static <T extends Comparable<T>> NilNode<T> getInstance(BlackNode<T> parent) {
+    public static <T extends Comparable<T>> NilNode<T> getInstance(AbstractNode<T> parent) {
         return new NilNode<T>(parent);
     }
 
@@ -22,7 +22,7 @@ public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
     }
 
     @Override
-    public Integer getBalance() {
+    public Integer getBalanceFactor() {
         return 0;
     }
 
@@ -48,16 +48,6 @@ public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
         return null;
     }
 
-    @Override
-    public void setLeftChild(AbstractNode<T> left) {
-        throw new IllegalStateException("Nil node cannot have left child");
-    }
-
-    @Override
-    public void setRightChild(AbstractNode<T> right) {
-        throw new IllegalStateException("Nil node cannot have right child");
-    }
-
     public static <T extends Comparable<T>> NilNode<T> getInstance() {
         return new NilNode<T>();
     }
@@ -70,5 +60,10 @@ public class NilNode<T extends Comparable<T>> extends BlackNode<T> {
     @Override
     public RedNode<T> toRedNode(){
         throw new IllegalStateException("Nil node cannot be converted to red node");
+    }
+
+    @Override
+    public String toString() {
+        return "NIL";
     }
 }

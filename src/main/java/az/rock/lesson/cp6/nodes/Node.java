@@ -7,13 +7,17 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
         super(value, left, right);
     }
 
+    public Node(T value) {
+        super(value);
+    }
+
     @Override
     public int compareTo(AbstractNode<T> o) {
         return this.getValue().compareTo(o.getValue());
     }
 
     @Override
-    public AbstractNode<T> insert(AbstractNode<T> parent,T data) {
+    public AbstractNode<T> insert(T data) {
         AbstractNode<T> node = new RedNode<T>(data);
         if (node.isLessThan(this)){
             if (this.getLeftChild().isEmpty()){
@@ -21,7 +25,7 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
                 node.setParent(this);
                 return this;
             }else {
-                return this.getLeftChild().insert(this,data);
+                return this.getLeftChild().insert(data);
             }
         }else {
             if (this.getRightChild().isEmpty()){
@@ -29,7 +33,7 @@ public class Node<T extends Comparable<T>> extends AbstractNode<T> {
                 node.setParent(this);
                 return this;
             }else {
-                return this.getRightChild().insert(this,data);
+                return this.getRightChild().insert(data);
             }
         }
     }
