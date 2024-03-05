@@ -26,7 +26,7 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
             if (this.left.isEmpty()){
                 node.setParent(this);
                 this.left = node;
-                return this.rebalance(node);
+                return node;
             }else {
                 return this.left.insert(data);
             }
@@ -34,34 +34,14 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
             if (this.right.isEmpty()){
                 node.setParent(this);
                 this.right = node;
-                return this.rebalance(node);
+                return node;
             }else {
                 return this.right.insert(data);
             }
         }
     }
 
-    public AVLNode<T> rebalance(AVLNode<T> node){
-        if (node.isLeftHeavy()){
-            if (node.getLeft().isRightHeavy()) {
-                node.setLeft(this.leftRotation(node));
-            }
-            return this.rightRotation(node);
-        }
-        if (node.isRightHeavy()){
-            if (node.getRight().isLeftHeavy()) node.setRight(this.rightRotation(node));
-            return this.leftRotation(node);
-        }
-        return node;
-    }
 
-    public AVLNode<T>  rightRotation(AVLNode<T> node){
-        return node;
-    }
-
-    public AVLNode<T>  leftRotation(AVLNode<T> node){
-        return node;
-    }
 
 
 
@@ -122,11 +102,11 @@ public class AVLNode <T extends Comparable<T>> implements Comparable<AVLNode<T>>
     }
 
     public boolean isLeftHeavy() {
-        return this.getBalanceFactor() > 1;
+        return this.getBalanceFactor() < -1;
     }
 
     public boolean isRightHeavy() {
-        return this.getBalanceFactor() < -1;
+        return this.getBalanceFactor() > 1;
     }
 
     public int getBalanceFactor() {
