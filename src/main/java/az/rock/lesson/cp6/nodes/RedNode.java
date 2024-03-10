@@ -5,6 +5,10 @@ public class RedNode<T extends Comparable<T>> extends AbstractNode.Node<T> {
         super(value, left, right);
     }
 
+    public RedNode(AbstractNode<T> parent, T value, BlackNode<T> left, BlackNode<T> right) {
+        super(parent,value, left, right);
+    }
+
     public RedNode(T value) {
         super(value, BlackNode.NilNode.NIL, BlackNode.NilNode.NIL);
     }

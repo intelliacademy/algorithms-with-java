@@ -6,7 +6,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
-    private AbstractNode<T> root = BlackNode.NilNode.NIL;
+    private AbstractNode<T> root = BlackNode.NilNode.getRootReference();
 
     public RedBlackTree() {}
 
@@ -18,88 +18,9 @@ public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
         } else {
             var node = this.root.insert(data);
             node.updateHeight();
-            this.startBalancing(node);
         }
     }
 
-    private void startBalancing(AbstractNode<T> node) {
-        while(node != null) {
-            node.updateHeight();
-            this.rebalancing(node);
-            node = node.getParent();
-        }
-    }
-
-    public void rebalancing(AbstractNode<T> node) {
-        if (node.isLeftHeavy()){
-            if (node.getLeftChild().isRightHeavy()){
-                this.rightRotation(node.getLeftChild());
-            }
-            this.leftRotation(node);
-        }
-        if (node.isRightHeavy()){
-            if (node.getRightChild().isLeftHeavy()){
-                this.leftRotation(node.getRightChild());
-            }
-            this.rightRotation(node);
-        }
-    }
-
-    public void rightRotation(AbstractNode<T> node) {
-        var tempLeftChild = node.getLeftChild();
-        var grandChild = tempLeftChild.getRightChild();
-        tempLeftChild.setRightChild(node);
-        node.setLeftChild(grandChild);
-        if (grandChild != null && !grandChild.isEmpty()) {
-            grandChild.setParent(node);
-        }
-
-        var tempParent = node.getParent();
-        node.setParent(tempLeftChild);
-        tempLeftChild.setParent(tempParent);
-        if (tempLeftChild.getParent() != null && tempLeftChild.getParent().getLeftChild() == node) {
-            tempLeftChild.getParent().setLeftChild(tempLeftChild);
-        }
-
-        if (tempLeftChild.getParent() != null && tempLeftChild.getParent().getRightChild() == node) {
-            tempLeftChild.getParent().setRightChild(tempLeftChild);
-        }
-
-        if (node == this.root) {
-            this.root = tempLeftChild;
-        }
-
-        node.updateHeight();
-        tempLeftChild.updateHeight();
-    }
-
-    public void leftRotation(AbstractNode<T> node) {
-        var tempRightChild = node.getRightChild();
-        var grandChild = tempRightChild.getLeftChild();
-        tempRightChild.setLeftChild(node);
-        node.setRightChild(grandChild);
-        if (grandChild != null && !grandChild.isEmpty()) {
-            grandChild.setParent(node);
-        }
-
-        var tempParent = node.getParent();
-        node.setParent(tempRightChild);
-        tempRightChild.setParent(tempParent);
-        if (tempRightChild.getParent() != null && tempRightChild.getParent().getLeftChild() == node) {
-            tempRightChild.getParent().setLeftChild(tempRightChild);
-        }
-
-        if (tempRightChild.getParent() != null && tempRightChild.getParent().getRightChild() == node) {
-            tempRightChild.getParent().setRightChild(tempRightChild);
-        }
-
-        if (node == this.root) {
-            this.root = tempRightChild;
-        }
-
-        node.updateHeight();
-        tempRightChild.updateHeight();
-    }
 
     @Override
     public void remove(T data) {

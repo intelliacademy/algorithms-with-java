@@ -16,10 +16,49 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         this.right = right;
     }
 
+    protected AbstractNode(AbstractNode<T> parent,T value,  AbstractNode<T> left, AbstractNode<T> right) {
+        this(value, left, right);
+        this.parent = parent;
+    }
+
     protected AbstractNode(T value) {
         this.value = value;
+        this.parent = BlackNode.NilNode.getRootReference();
         this.left = BlackNode.NilNode.getInstance(this);
         this.right = BlackNode.NilNode.getInstance(this);
+    }
+
+    public AbstractNode<T> getGrandParent() {
+        return this.parent.getParent();
+    }
+
+
+    public AbstractNode<T> getUncle() {
+        if (this.parent.isLeftChild()) {
+            return this.parent.getParent().getRightChild();
+        }else {
+            return this.parent.getParent().getLeftChild();
+        }
+    }
+
+    public Boolean isLeftChild() {
+        return this.parent.getLeftChild().equals(this);
+    }
+
+    public Boolean isRightChild() {
+        return this.parent.getRightChild().equals(this);
+    }
+
+    public Boolean isRoot() {
+        return this == BlackNode.NilNode.getRootReference();
+    }
+
+    public void startBalancing() {
+        if (this.isRoot()) {
+            this.toBlackNode();
+        }else {
+            this.reColor();
+        }
     }
 
     @Override
@@ -36,6 +75,17 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         return this.value.compareTo(o.value);
     }
 
+    public Boolean isRed() {
+        return this instanceof RedNode;
+    }
+
+    public Boolean isBlack() {
+        return this instanceof BlackNode;
+    }
+
+    public Boolean isNil() {
+        return this instanceof BlackNode.NilNode;
+    }
 
     public int getHeight() {
         return height;
@@ -104,25 +154,11 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         consumer.accept(this.getValue());
     }
 
-    public Boolean isGreaterThan(AbstractNode<T> node) {
-        return this.compareTo(node) > 0;
-    }
 
     public Boolean isLessThan(AbstractNode<T> node) {
         return this.compareTo(node) < 0;
     }
 
-    public Boolean isEqualTo(AbstractNode<T> node) {
-        return this.compareTo(node) == 0;
-    }
-
-    public Boolean isGreaterOrEqualsThan(AbstractNode<T> node) {
-        return this.isGreaterThan(node) || this.isEqualTo(node);
-    }
-
-    public Boolean isLessOrEqualsThan(AbstractNode<T> node) {
-        return this.isLessThan(node) || this.isEqualTo(node);
-    }
 
     public abstract AbstractNode<T> insert(T data);
 
@@ -197,6 +233,10 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
             super(value, left, right);
         }
 
+        public Node(AbstractNode<T> parent,T value,  AbstractNode<T> left, AbstractNode<T> right) {
+            super(parent, value, left, right);
+        }
+
         public Node(T value) {
             super(value);
         }
@@ -254,14 +294,14 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         @Override
         public RedNode<T> toRedNode() {
             if (!(this instanceof RedNode))
-                return new RedNode<T>(this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
+                return new RedNode<T>(this.getParent(),this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
             else return (RedNode<T>) this;
         }
 
         @Override
         public BlackNode<T> toBlackNode() {
             if (!(this instanceof BlackNode))
-                return new BlackNode<T>(this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
+                return new BlackNode<T>(this.getParent(),this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
             else return (BlackNode<T>) this;
         }
     }

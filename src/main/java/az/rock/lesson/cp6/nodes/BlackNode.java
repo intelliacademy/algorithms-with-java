@@ -3,7 +3,7 @@ package az.rock.lesson.cp6.nodes;
 import java.util.function.BiFunction;
 
 public class BlackNode<T extends Comparable<T>> extends AbstractNode.Node<T> {
-    public BlackNode(T value, AbstractNode<T> left, AbstractNode<T> right) {
+    public BlackNode(AbstractNode<T> parent,T value, AbstractNode<T> left, AbstractNode<T> right) {
         super(value, left, right);
     }
 
@@ -12,17 +12,21 @@ public class BlackNode<T extends Comparable<T>> extends AbstractNode.Node<T> {
     }
 
     public static class NilNode<T extends Comparable<T>> extends BlackNode<T> {
-        public static NilNode NIL = new NilNode();
+        public static NilNode NIL;
+        public static NilNode ROOT = new NilNode();
         public NilNode(AbstractNode<T> parent) {
-            super(null, NIL, NIL);
+            super(parent,null, NIL, NIL);
         }
 
         public NilNode() {
-            super(null, null, null);
+            super(null,null, null, null);
         }
 
         public static <T extends Comparable<T>> NilNode<T> getInstance(AbstractNode<T> parent) {
-            return new NilNode<T>(parent);
+            if (NIL == null) {
+                NIL = new NilNode(parent);
+            }
+            return NIL;
         }
 
         @Override
@@ -43,10 +47,7 @@ public class BlackNode<T extends Comparable<T>> extends AbstractNode.Node<T> {
         }
 
         public static synchronized  <T extends Comparable<T>> NilNode<T> getRootReference() {
-            if (NIL == null) {
-                NIL = new NilNode<T>();
-            }
-            return NIL;
+            return ROOT;
         }
 
         @Override
