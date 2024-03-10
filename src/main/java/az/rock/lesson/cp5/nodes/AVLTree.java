@@ -33,7 +33,8 @@ public class AVLTree <T extends Comparable<T>> implements Tree<T> {
             this.rightRotation(node);
         }
         if (node.isRightHeavy()){
-            if (node.getRight().isLeftHeavy()) this.rightRotation(node.getRight());
+            if (node.getRight().isLeftHeavy())
+                this.rightRotation(node.getRight());
             this.leftRotation(node);
         }
     }

@@ -11,6 +11,12 @@ public class BlackNode<T extends Comparable<T>> extends AbstractNode.Node<T> {
         super(value);
     }
 
+
+    @Override
+    public AbstractNode<T> reColor() {
+        return this.toRedNode();
+    }
+
     public static class NilNode<T extends Comparable<T>> extends BlackNode<T> {
         public static NilNode NIL;
         public static NilNode ROOT = new NilNode();
@@ -27,6 +33,11 @@ public class BlackNode<T extends Comparable<T>> extends AbstractNode.Node<T> {
                 NIL = new NilNode(parent);
             }
             return NIL;
+        }
+
+        @Override
+        public AbstractNode<T> reColor() {
+            return this;
         }
 
         @Override

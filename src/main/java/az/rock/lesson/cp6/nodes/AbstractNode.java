@@ -41,6 +41,8 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
         }
     }
 
+
+
     public Boolean isLeftChild() {
         return this.parent.getLeftChild().equals(this);
     }
@@ -228,7 +230,7 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
     }
 
 
-    public static class Node<T extends Comparable<T>> extends AbstractNode<T> {
+    public static abstract class Node<T extends Comparable<T>> extends AbstractNode<T> {
         public Node(T value,  AbstractNode<T> left, AbstractNode<T> right) {
             super(value, left, right);
         }
@@ -287,21 +289,16 @@ public abstract class AbstractNode<T extends Comparable<T>>  implements Comparab
 
 
         @Override
-        public AbstractNode<T> reColor() {
-            return null;
-        }
-
-        @Override
         public RedNode<T> toRedNode() {
             if (!(this instanceof RedNode))
-                return new RedNode<T>(this.getParent(),this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
+                return new RedNode<T>(this.getParent(),this.getValue(), this.getLeftChild().reColor(), this.getRightChild().reColor());
             else return (RedNode<T>) this;
         }
 
         @Override
         public BlackNode<T> toBlackNode() {
             if (!(this instanceof BlackNode))
-                return new BlackNode<T>(this.getParent(),this.getValue(), this.getLeftChild().toBlackNode(), this.getRightChild().toBlackNode());
+                return new BlackNode<T>(this.getParent(),this.getValue(), this.getLeftChild().reColor(), this.getRightChild().reColor());
             else return (BlackNode<T>) this;
         }
     }
