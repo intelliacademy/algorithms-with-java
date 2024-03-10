@@ -47,8 +47,33 @@ public class Record<T> {
         return index;
     }
 
+    public static <T> Record<T> nil() {
+        return (Record<T>) NilRecord.NIL;
+    }
+
     @Override
     public String toString() {
         return "Record[" +value +"]";
+    }
+
+    public boolean isNotNull() {
+        return this != NilRecord.NIL;
+    }
+
+    public boolean isNil() {
+        return this == NilRecord.NIL;
+    }
+
+    public static class NilRecord<T> extends Record<T> {
+        public static final NilRecord<?> NIL = new NilRecord<>();
+
+        private NilRecord() {
+            super(-1, null);
+        }
+
+        @Override
+        public String toString() {
+            return "NilRecord";
+        }
     }
 }
