@@ -47,5 +47,8 @@ public class Record<T> {
         return index;
     }
 
-
+    @Override
+    public String toString() {
+        return "Record[" +value +"]";
+    }
 }

@@ -97,9 +97,13 @@ public abstract class AbstractBNode<T extends Comparable<T>>  {
     }
 
 
-
-
-
+    @Override
+    public String toString() {
+        return "AbstractBNode{" +
+                "records=" + Arrays.toString(records) +
+                ", pointers=" + Arrays.toString(pointers) +
+                '}';
+    }
 
     public static class NilNode<T extends Comparable<T>> extends AbstractBNode<T> {
         public static final NilNode NIL = new NilNode();
@@ -110,6 +114,11 @@ public abstract class AbstractBNode<T extends Comparable<T>>  {
         @Override
         public AbstractBNode<T> insert(T value) {
             return null;
+        }
+
+        @Override
+        public String toString() {
+            return "NIL";
         }
     }
 
