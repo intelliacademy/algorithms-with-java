@@ -246,6 +246,21 @@ public sealed class BinaryNode <T extends Comparable<? super T>> implements Comp
         }
     }
 
+    //kth smallest element
+    public T kthSmallest(int k){
+        if (isEmpty()){
+            return null;
+        }
+        int leftSize = left.size();
+        if (leftSize == k - 1){
+            return element;
+        }else if (leftSize > k - 1){
+            return left.kthSmallest(k);
+        }else {
+            return right.kthSmallest(k - leftSize - 1);
+        }
+    }
+
     public BinaryNode<T> contains(T element){
         if (isEmpty()){
             return this;
