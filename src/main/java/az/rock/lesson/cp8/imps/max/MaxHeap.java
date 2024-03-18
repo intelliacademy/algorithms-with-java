@@ -80,6 +80,23 @@ public class MaxHeap<T extends Comparable<T>> {
         }
     }
 
+    private void remove(int index) {
+        if(index < 0 || index >= size) throw new IllegalArgumentException();
+        heap[index] = heap[size - 1];
+        heap[size - 1] = null;
+        size--;
+        heapifyDown();
+    }
+
+    public void remove(T value) {
+        for (int i = 0; i < size; i++) {
+            if(heap[i].getValue().equals(value)) {
+                remove(i);
+                return;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "MaxHeap{" +
