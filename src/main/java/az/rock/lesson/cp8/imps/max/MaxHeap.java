@@ -50,24 +50,23 @@ public class MaxHeap<T extends Comparable<T>> {
     }
 
     public void foreach(Consumer<T> consumer) {
-        for (HeapNode<T> t : heap) {
+        for (HeapNode<T> t : heap)
             consumer.accept(t.getValue());
-        }
     }
 
-    public HeapNode<T> peek() {
+    public T peek() {
         if(size == 0) throw new IllegalStateException();
-        return heap[0];
+        return heap[0].getValue();
     }
 
-    public HeapNode<T> poll() {
+    public T poll() {
         if(size == 0) throw new IllegalStateException();
         HeapNode<T> temp = heap[0];
         heap[0] = HeapNode.of(heap[size - 1],0);
         heap[size - 1] = null;
         size--;
         heapifyDown();
-        return temp;
+        return temp.getValue();
     }
 
     public void heapifyDown() {
