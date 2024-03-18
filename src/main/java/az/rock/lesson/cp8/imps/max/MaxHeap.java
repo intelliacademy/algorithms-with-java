@@ -45,8 +45,8 @@ public class MaxHeap<T extends Comparable<T>> {
 
     public void swap(int index1, int index2) {
         HeapNode<T> temp = heap[index1];
-        heap[index1] = heap[index2];
-        heap[index2] = temp;
+        heap[index1] = HeapNode.of(heap[index2],index1);
+        heap[index2] = HeapNode.of(temp,index2);
     }
 
     public void foreach(Consumer<T> consumer) {
@@ -63,7 +63,7 @@ public class MaxHeap<T extends Comparable<T>> {
     public HeapNode<T> poll() {
         if(size == 0) throw new IllegalStateException();
         HeapNode<T> temp = heap[0];
-        heap[0] = heap[size - 1];
+        heap[0] = HeapNode.of(heap[size - 1],0);
         heap[size - 1] = null;
         size--;
         heapifyDown();
@@ -82,7 +82,7 @@ public class MaxHeap<T extends Comparable<T>> {
 
     private void remove(int index) {
         if(index < 0 || index >= size) throw new IllegalArgumentException();
-        heap[index] = heap[size - 1];
+        heap[index] = HeapNode.of(heap[size - 1],index);
         heap[size - 1] = null;
         size--;
         heapifyDown();

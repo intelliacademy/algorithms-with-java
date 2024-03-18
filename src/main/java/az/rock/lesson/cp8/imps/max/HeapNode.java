@@ -1,12 +1,16 @@
 package az.rock.lesson.cp8.imps.max;
 
-public class HeapNode <T extends Comparable<T>> implements Comparable<HeapNode<T>> {
-    private T value;
-    private int index;
+public final class HeapNode <T extends Comparable<T>> implements Comparable<HeapNode<T>> {
+    private final T value;
+    private final int index;
 
     public HeapNode(T value, int index) {
         this.value = value;
         this.index = index;
+    }
+
+    public static <T extends Comparable<T>> HeapNode<T> of(HeapNode<T> node, int index) {
+        return new HeapNode<>(node.getValue(), index);
     }
 
 
@@ -17,6 +21,7 @@ public class HeapNode <T extends Comparable<T>> implements Comparable<HeapNode<T
     public int getIndex() {
         return index;
     }
+
 
     @Override
     public int compareTo(HeapNode<T> o) {

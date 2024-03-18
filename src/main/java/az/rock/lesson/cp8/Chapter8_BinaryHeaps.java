@@ -20,6 +20,6 @@ public class Chapter8_BinaryHeaps {
             maxHeap1.add(i);
         }
 
-        maxHeap1.foreach(System.out::println);
+        System.out.print("Max Heap: " + maxHeap1);
     }
 }
