@@ -1,5 +1,6 @@
 package az.rock.lesson.cp8.imps.max;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked")
@@ -17,6 +18,13 @@ public class MaxHeap<T extends Comparable<T>> {
     public MaxHeap(int capacity) {
         heap = new HeapNode[capacity];
         this.size = 0;
+    }
+
+    public void add(T value) {
+        ensureCapacity();
+        heap[size] = new HeapNode<>(value, size);
+        size++;
+        heapifyUp();
     }
 
     public void ensureCapacity() {
@@ -72,6 +80,12 @@ public class MaxHeap<T extends Comparable<T>> {
         }
     }
 
+    @Override
+    public String toString() {
+        return "MaxHeap{" +
+                "heap=" + Arrays.toString(heap) +
+                '}';
+    }
 
     public Boolean hasParent(int index){
         return this.heap[(index - 1) / 2] != null;

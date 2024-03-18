@@ -22,4 +22,12 @@ public class HeapNode <T extends Comparable<T>> implements Comparable<HeapNode<T
     public int compareTo(HeapNode<T> o) {
         return this.value.compareTo(o.value);
     }
+
+    @Override
+    public String toString() {
+        return "HeapNode{" +
+                "value=" + value +
+                ", index=" + index +
+                '}';
+    }
 }
