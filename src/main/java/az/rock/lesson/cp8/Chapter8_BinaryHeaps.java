@@ -21,5 +21,9 @@ public class Chapter8_BinaryHeaps {
         }
 
         System.out.print("Max Heap: " + maxHeap1);
+
+        maxHeap1.remove(10);
+        System.out.println("-------------------\n");
+        System.out.print("Max Heap: " + maxHeap1);
     }
 }
