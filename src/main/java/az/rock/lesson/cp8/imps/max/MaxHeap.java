@@ -85,7 +85,7 @@ public class MaxHeap<T extends Comparable<T>> {
         while(this.hasLeftChild(index)) {
             int largerChildIndex = (hasRightChild(index) && this.fetchRightChild(index).isGreaterThan(this.fetchLeftChild(index))) ? (index * 2) + 2 : (index * 2) + 1;
             if(heap[index].isGreaterThan(heap[largerChildIndex])) break;
-            this.swap(index, largerChildIndex);
+            else this.swap(index, largerChildIndex);
             index = largerChildIndex;
         }
     }
