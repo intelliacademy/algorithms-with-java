@@ -37,26 +37,29 @@ public class MaxHeap<T extends Comparable<T>> {
 
     public void heapifyUp() {
         int index = size - 1;
-        while(hasParent(index) && heap[index].compareTo(heap[(index - 1) / 2]) > 0) {
-            swap(index, (index - 1) / 2);
-            index = (index - 1) / 2;
+        var parent = (index - 1) / 2;
+        while(this.hasParent(index) && heap[index].isGreaterThan(heap[parent])) {
+            this.swap(index, parent);
+            index = parent;
         }
     }
 
-    public void swap(int index1, int index2) {
+    public void swap(int index1, int parent) {
         HeapNode<T> temp = heap[index1];
-        heap[index1] = HeapNode.of(heap[index2],index1);
-        heap[index2] = HeapNode.of(temp,index2);
+        heap[index1] = HeapNode.of(heap[parent],index1);
+        heap[parent] = HeapNode.of(temp,parent);
     }
 
     public void foreach(Consumer<T> consumer) {
-        for (HeapNode<T> t : heap)
-            consumer.accept(t.getValue());
+        for (HeapNode<T> t : heap) consumer.accept(t.getValue());
     }
 
     public T peek() {
-        if(size == 0) throw new IllegalStateException();
-        return heap[0].getValue();
+        T temp = null;
+        try {
+            temp = heap[0].getValue();
+        }catch (Exception ignored) {}
+        return temp;
     }
 
     public T poll() {
@@ -69,12 +72,20 @@ public class MaxHeap<T extends Comparable<T>> {
         return temp.getValue();
     }
 
+    public HeapNode<T> fetchLeftChild(int index) {
+        return heap[(index * 2) + 1];
+    }
+
+    public HeapNode<T> fetchRightChild(int index) {
+        return heap[(index * 2) + 2];
+    }
+
     public void heapifyDown() {
         int index = 0;
         while(hasLeftChild(index)) {
-            int largerChildIndex = (hasRightChild(index) && heap[(index * 2) + 2].compareTo(heap[(index * 2) + 1]) > 0) ? (index * 2) + 2 : (index * 2) + 1;
-            if(heap[index].compareTo(heap[largerChildIndex]) > 0) break;
-            swap(index, largerChildIndex);
+            int largerChildIndex = (hasRightChild(index) && this.fetchRightChild(index).isGreaterThan(this.fetchLeftChild(index))) ? (index * 2) + 2 : (index * 2) + 1;
+            if(heap[index].isGreaterThan(heap[largerChildIndex])) break;
+            this.swap(index, largerChildIndex);
             index = largerChildIndex;
         }
     }

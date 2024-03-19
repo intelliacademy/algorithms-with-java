@@ -13,6 +13,17 @@ public final class HeapNode <T extends Comparable<T>> implements Comparable<Heap
         return new HeapNode<>(node.getValue(), index);
     }
 
+    public Boolean isGreaterThan(HeapNode<T> node) {
+        return this.compareTo(node) > 0;
+    }
+
+    public Boolean isLessThan(HeapNode<T> node) {
+        return this.compareTo(node) < 0;
+    }
+
+    public Boolean isEqualTo(HeapNode<T> node) {
+        return this.compareTo(node) == 0;
+    }
 
     public T getValue() {
         return value;
