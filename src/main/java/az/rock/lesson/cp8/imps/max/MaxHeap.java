@@ -82,7 +82,7 @@ public class MaxHeap<T extends Comparable<T>> {
 
     public void heapifyDown() {
         int index = 0;
-        while(hasLeftChild(index)) {
+        while(this.hasLeftChild(index)) {
             int largerChildIndex = (hasRightChild(index) && this.fetchRightChild(index).isGreaterThan(this.fetchLeftChild(index))) ? (index * 2) + 2 : (index * 2) + 1;
             if(heap[index].isGreaterThan(heap[largerChildIndex])) break;
             this.swap(index, largerChildIndex);
