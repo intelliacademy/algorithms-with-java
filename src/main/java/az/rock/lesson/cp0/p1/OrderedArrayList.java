@@ -9,13 +9,8 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
 
     private static final int DEFAULT_CAPACITY = 10;
     private Knot<T>[] head;
-
     private Integer currentCapacity = DEFAULT_CAPACITY;
     private Integer tailIndex = 0;
-
-    private Integer cursor = 0;
-
-
 
     public OrderedArrayList(){
         head = new Knot[DEFAULT_CAPACITY];
@@ -73,7 +68,16 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
 
     @Override
     public void remove(T element) {
-
+        for(int i = 0; i < tailIndex; i++){
+            if (head[i].isEqualTo(Knot.ofNullable(element))){
+                for(int j = i; j < tailIndex - 1; j++){
+                    head[j] = head[j + 1];
+                }
+                head[tailIndex - 1] = Knot.ofNull();
+                tailIndex--;
+                return;
+            }
+        }
     }
 
     @Override
@@ -84,13 +88,19 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
     }
 
     @Override
-    public void get(T element) {
-
+    public T get(T element) {
+        for (int i = 0; i < tailIndex; i++){
+            if (head[i].isEqualTo(Knot.ofNullable(element))){
+                return head[i].value();
+            }
+        }
+        return null;
     }
 
     @Override
     public void clear() {
-
+        head = new Knot[currentCapacity];
+        tailIndex = 0;
     }
 
 
