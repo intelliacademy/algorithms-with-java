@@ -3,7 +3,6 @@ package az.rock.lesson.cp0.p1;
 import az.rock.lesson.cp0.OrderedList;
 import lombok.NonNull;
 
-import java.util.Comparator;
 import java.util.function.Consumer;
 
 public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T> {
@@ -12,7 +11,7 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
     private Knot<T>[] head;
 
     private Integer currentCapacity = DEFAULT_CAPACITY;
-    private Integer nextEligibleIndex = 0;
+    private Integer tailIndex = 0;
 
     private Integer cursor = 0;
 
@@ -23,7 +22,7 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
     }
 
     private Boolean isFull(){
-        return nextEligibleIndex == currentCapacity;
+        return tailIndex == currentCapacity;
     }
 
     private void ensureCapacity(){
@@ -38,7 +37,7 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
     }
 
     public Boolean isEmpty(){
-        return nextEligibleIndex == 0;
+        return tailIndex == 0;
     }
 
 
@@ -46,31 +45,29 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
     public void add(T element) {
         this.ensureCapacity();
         this.addOrdered(element);
-        nextEligibleIndex++;
+        tailIndex++;
     }
 
     private Knot<T> fetch(Integer index){
-        if (index < 0 || index >= nextEligibleIndex){
-            return null;
-        }
+        if (index < 0 || index >= tailIndex) return Knot.ofNull();
         return head[index];
     }
 
     private void addOrdered(T element){
-        var knot = Knot.<T>of(element);
+        var knot = Knot.<T>ofNullable(element);
         if (isEmpty()){
             head[0] = knot;
         }else {
-            for(int i = 0; i < nextEligibleIndex; i++){
+            for(int i = 0; i < tailIndex; i++){
                 if (this.fetch(i).isGreaterThan(knot)){
-                    for(int j = nextEligibleIndex; j > i; j--){
+                    for(int j = tailIndex; j > i; j--){
                         head[j] = head[j - 1];
                     }
                     head[i] = new Knot<>(element);
                     return;
                 }
             }
-            head[nextEligibleIndex] = new Knot<>(element);
+            head[tailIndex] = new Knot<>(element);
         }
     }
 
@@ -80,8 +77,10 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
     }
 
     @Override
-    public void forEach(Consumer<T> consumer) {
-
+    public void forEach(Consumer<T> visitorConsumer) {
+        for(int i = 0; i < tailIndex; i++){
+            head[i].consume(visitorConsumer);
+        }
     }
 
     @Override
@@ -106,13 +105,21 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
             return value;
         }
 
-        public static <T extends Comparable<T>> Knot<T> of(T value){
+        public static <T extends Comparable<T>> Knot<T> ofNullable(T value){
             if (value == null) return new NilKnot<>();
             return new Knot<>(value);
         }
 
+        public static <T extends Comparable<T>> Knot<T> ofNull(){
+            return new NilKnot<>();
+        }
+
         public Boolean isNil(){
             return value == null;
+        }
+
+        public void consume(Consumer<T> consumer){
+            consumer.accept(value);
         }
 
         @Override
@@ -143,6 +150,14 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
         public static class NilKnot<T extends Comparable<T>> extends Knot<T>{
             public NilKnot(){
                 super(null);
+            }
+
+            @Override
+            public void consume(Consumer<T> consumer) {}
+
+            @Override
+            public T value() {
+                throw new UnsupportedOperationException("Nil Knot has no value");
             }
 
             @Override
