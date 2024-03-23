@@ -7,5 +7,8 @@ public interface OrderedList <T>{
     void remove(T element);
     void forEach(Consumer<T> consumer);
     T get(T element);
+
+    T getFirst();
+    T getLast();
     void clear();
 }

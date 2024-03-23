@@ -51,8 +51,14 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
         return head[index];
     }
 
-    public Knot<T> getLast(){
-        return fetch(tailIndex - 1);
+    @Override
+    public T getLast(){
+        return fetch(tailIndex - 1).value;
+    }
+
+    @Override
+    public T getFirst() {
+        return this.fetch(0).value;
     }
 
     private void addOrdered(T element){
