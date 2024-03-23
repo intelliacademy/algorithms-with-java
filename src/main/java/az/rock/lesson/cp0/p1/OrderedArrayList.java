@@ -5,6 +5,7 @@ import lombok.NonNull;
 
 import java.util.function.Consumer;
 
+//This is accenting ordered list
 public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T> {
 
     private static final int DEFAULT_CAPACITY = 10;
@@ -48,6 +49,10 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
     private Knot<T> fetch(Integer index){
         if (index < 0 || index >= tailIndex) return Knot.ofNull();
         return head[index];
+    }
+
+    public Knot<T> getLast(){
+        return fetch(tailIndex - 1);
     }
 
     private void addOrdered(T element){
