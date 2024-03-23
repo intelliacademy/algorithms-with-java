@@ -5,14 +5,13 @@ import lombok.NonNull;
 
 import java.util.function.Consumer;
 
-//This is accenting ordered list
+//This is accenting (ASC) ordered list
 public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T> {
 
     private static final int DEFAULT_CAPACITY = 10;
     private Knot<T>[] head;
     private Integer currentCapacity = DEFAULT_CAPACITY;
     private Integer tailIndex = 0;
-
     private Integer cursor;
 
     public OrderedArrayList(){
