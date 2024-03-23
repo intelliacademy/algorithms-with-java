@@ -12,6 +12,8 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
     private Integer currentCapacity = DEFAULT_CAPACITY;
     private Integer tailIndex = 0;
 
+    private Integer cursor;
+
     public OrderedArrayList(){
         head = new Knot[DEFAULT_CAPACITY];
     }
@@ -39,7 +41,7 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
     @Override
     public void add(T element) {
         this.ensureCapacity();
-        this.addOrdered(element);
+        this.addDirect(element);
         tailIndex++;
     }
 
@@ -50,19 +52,33 @@ public class OrderedArrayList <T extends Comparable<T>> implements OrderedList<T
 
     private void addOrdered(T element){
         var knot = Knot.<T>ofNullable(element);
-        if (isEmpty()){
-            head[0] = knot;
-        }else {
-            for(int i = 0; i < tailIndex; i++){
-                if (this.fetch(i).isGreaterThan(knot)){
-                    for(int j = tailIndex; j > i; j--){
-                        head[j] = head[j - 1];
-                    }
-                    head[i] = new Knot<>(element);
-                    return;
+        for(int i = 0; i < tailIndex; i++){
+            if (this.fetch(i).isGreaterThan(knot)){
+                for(int j = tailIndex; j > i; j--){
+                    head[j] = head[j - 1];
                 }
+                head[i] = new Knot<>(element);
+                return;
             }
-            head[tailIndex] = new Knot<>(element);
+        }
+        head[tailIndex] = new Knot<>(element);
+    }
+
+    private void addDirect(T element){
+        this.cursor = tailIndex;
+        this.addRecursive(element, cursor);
+    }
+
+    private void addRecursive(T elemtent, Integer index){
+        if (index == 0){
+            head[index] = new Knot<>(elemtent);
+            return;
+        }
+        if (this.fetch(index - 1).isLessThan(Knot.ofNullable(elemtent))){
+            head[index] = new Knot<>(elemtent);
+        } else {
+            head[index] = head[index - 1];
+            addRecursive(elemtent, index - 1);
         }
     }
 
