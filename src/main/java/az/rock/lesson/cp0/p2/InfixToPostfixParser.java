@@ -24,15 +24,8 @@ public class InfixToPostfixParser {
         Knot[] knots = new Knot[expression.length()];
         for (int i = 0; i < expression.length(); i++) {
             char character = expression.charAt(i);
-            int priority = 0;
-            if(character == '+' || character == '-'){
-                priority = 1;
-            }else if(character == '*' || character == '/'){
-                priority = 2;
-            }else if(character == '^') {
-                priority = 3;
-            }
-            knots[i] = new Knot(character, priority);
+            if (character == ' ') continue;
+            knots[i] = new Knot(character);
         }
         return knots;
     }
@@ -66,9 +59,24 @@ public class InfixToPostfixParser {
         private Character character;
         private Integer priority;
 
-        public Knot(Character character, Integer priority) {
+        public Knot(Character character) {
             this.character = character;
-            this.priority = priority;
+            this.priority = setPriority(character);
+        }
+
+        public static Integer setPriority(Character character){
+            int priority = 0;
+            if(character == '+' || character == '-'){
+                priority = 1;
+            }else if(character == '*' || character == '/'){
+                priority = 2;
+            }else if(character == '^') {
+                priority = 3;
+            }
+//            else if (character == '(' || character == ')') {
+//                priority = 4;
+//            }
+            return priority;
         }
 
         public Character getCharacter() {
