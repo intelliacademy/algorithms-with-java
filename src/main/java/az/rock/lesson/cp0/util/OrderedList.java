@@ -1,4 +1,4 @@
-package az.rock.lesson.cp0;
+package az.rock.lesson.cp0.util;
 
 import java.util.function.Consumer;
 

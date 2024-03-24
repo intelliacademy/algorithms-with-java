@@ -1,6 +1,6 @@
 package az.rock.lesson.cp0.p1;
 
-import az.rock.lesson.cp0.OrderedList;
+import az.rock.lesson.cp0.util.OrderedList;
 import lombok.NonNull;
 
 import java.util.function.Consumer;
