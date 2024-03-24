@@ -11,7 +11,7 @@ public class SelectionSort<T extends Cloneable<T> & Comparable<T> > extends Abst
     private T min;
 
     @Override
-    public List<T> sort(List<T> list) {
+    public List<T> execute(List<T> list) {
         IntStream.range(0,list.size() - 1).forEach(iIndex->{
                     this.min = list.get(iIndex);
                     IntStream.range(iIndex,list.size()).forEach(jIndex->{

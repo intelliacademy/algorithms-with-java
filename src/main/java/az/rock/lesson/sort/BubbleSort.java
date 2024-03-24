@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 public class BubbleSort  <T extends Comparable<T>  & Cloneable<T>> extends AbstractTimeMetric<T> {
 
     @Override
-    public List<T> sort(List<T> list) {
+    public List<T> execute(List<T> list) {
         int n = list.size();
         IntStream.range(0,n).forEach(iIndex->{
             IntStream.range(1,n-iIndex).forEach(jIndex->{

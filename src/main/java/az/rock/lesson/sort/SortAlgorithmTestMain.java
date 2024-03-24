@@ -12,7 +12,7 @@ public class SortAlgorithmTestMain {
     static AbstractTimeMetric<Person> algorithm = new RadixSort<>();
 
     public static void main(String[] args) {
-        List<Person> sortedList = algorithm.sortAsMetric(unsortedPersonList);
+        List<Person> sortedList = algorithm.sort(unsortedPersonList);
         sortedList.forEach(e->System.out.println(e.getFirstName() + " " + e.getSalary()));
     }
 }

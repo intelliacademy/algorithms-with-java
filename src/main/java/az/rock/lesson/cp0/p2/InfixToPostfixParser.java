@@ -24,30 +24,33 @@ public class InfixToPostfixParser {
         Knot[] knots = new Knot[expression.length()];
         for (int i = 0; i < expression.length(); i++) {
             char character = expression.charAt(i);
-            if (character == ' ') continue;
+            if (character == ' ') {
+                continue;
+            }
             knots[i] = new Knot(character);
         }
         return knots;
     }
 
     public String parse(){
-        for (Knot knot : knots) {
-            if(knot.isOperator()){
-                while (!stack.isEmpty() && !stack.peek().isLeftParenthesis() && stack.peek().isUpperPriority(knot)){
-                    postfix.append(stack.pop().getCharacter());
+        for (Knot knot : knots)
+            if (knot != null){
+                if(knot.isOperator()){
+                    while (!stack.isEmpty() && !stack.peek().isLeftParenthesis() && stack.peek().isUpperPriority(knot)){
+                        postfix.append(stack.pop().getCharacter());
+                    }
+                    stack.push(knot);
+                }else if(knot.isLeftParenthesis()){
+                    stack.push(knot);
+                }else if(knot.isRightParenthesis()){
+                    while (!stack.isEmpty() && !stack.peek().isLeftParenthesis()){
+                        postfix.append(stack.pop().getCharacter());
+                    }
+                    stack.pop();
+                }else{
+                    postfix.append(knot.getCharacter());
                 }
-                stack.push(knot);
-            }else if(knot.isLeftParenthesis()){
-                stack.push(knot);
-            }else if(knot.isRightParenthesis()){
-                while (!stack.isEmpty() && !stack.peek().isLeftParenthesis()){
-                    postfix.append(stack.pop().getCharacter());
-                }
-                stack.pop();
-            }else{
-                postfix.append(knot.getCharacter());
             }
-        }
         while (!stack.isEmpty()){
             postfix.append(stack.pop().getCharacter());
         }
@@ -66,16 +69,17 @@ public class InfixToPostfixParser {
 
         public static Integer setPriority(Character character){
             int priority = 0;
-            if(character == '+' || character == '-'){
+            if (character == '+') {
                 priority = 1;
-            }else if(character == '*' || character == '/'){
+            } else if (character == '-') {
                 priority = 2;
-            }else if(character == '^') {
+            } else if (character == '*') {
                 priority = 3;
+            } else if ( character == '/') {
+                priority = 4;
+            } else if (character == '^') {
+                priority = 5;
             }
-//            else if (character == '(' || character == ')') {
-//                priority = 4;
-//            }
             return priority;
         }
 
