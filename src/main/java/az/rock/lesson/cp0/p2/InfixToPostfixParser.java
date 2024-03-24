@@ -1,22 +1,23 @@
 package az.rock.lesson.cp0.p2;
 
-import az.rock.lesson.cp2.Stack;
 
-public class InfixToPostfix {
+import java.util.Stack;
+
+public class InfixToPostfixParser {
 
     private Knot[] knots;
     private Stack<Knot> stack;
     private StringBuilder postfix;
 
-    private InfixToPostfix(Knot[] knots) {
+    private InfixToPostfixParser(Knot[] knots) {
         this.knots = knots;
-        this.stack = new Stack<Knot>();
+        this.stack = new Stack<>();
         this.postfix = new StringBuilder();
     }
 
 
-    public static InfixToPostfix of(String expression){
-        return new InfixToPostfix(parse(expression));
+    public static InfixToPostfixParser of(String expression){
+        return new InfixToPostfixParser(parse(expression));
     }
 
     public static Knot[] parse(String expression){
@@ -28,13 +29,15 @@ public class InfixToPostfix {
                 priority = 1;
             }else if(character == '*' || character == '/'){
                 priority = 2;
+            }else if(character == '^') {
+                priority = 3;
             }
             knots[i] = new Knot(character, priority);
         }
         return knots;
     }
 
-    public String convert(){
+    public String parse(){
         for (Knot knot : knots) {
             if(knot.isOperator()){
                 while (!stack.isEmpty() && !stack.peek().isLeftParenthesis() && stack.peek().isUpperPriority(knot)){
@@ -59,7 +62,7 @@ public class InfixToPostfix {
     }
 
 
-    public static class Knot implements Comparable<Knot> {
+    public static class Knot  {
         private Character character;
         private Integer priority;
 
@@ -77,7 +80,7 @@ public class InfixToPostfix {
         }
 
         public Boolean isOperator(){
-            return character == '+' || character == '-' || character == '*' || character == '/';
+            return character == '+' || character == '-' || character == '*' || character == '/' || character == '^';
         }
 
         public Boolean isUpperPriority(Knot knot){
@@ -100,9 +103,5 @@ public class InfixToPostfix {
             return character == ')';
         }
 
-        @Override
-        public int compareTo(Knot o) {
-            return priority.compareTo(o.getPriority());
-        }
     }
 }
