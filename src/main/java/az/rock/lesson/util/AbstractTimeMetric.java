@@ -14,4 +14,13 @@ public abstract class AbstractTimeMetric<T extends Comparable<T>> implements Sor
         System.err.println("-------------Execute time : " + duration + " ns------------");
         return result;
     }
+
+    public T[] sortArr(T[] list){
+        var startInstant = Instant.now();
+        var result =  this.executeArr(list);
+        var endInstant = Instant.now();
+        long duration = Duration.between(startInstant,endInstant).getNano();
+        System.err.println("-------------Execute time : " + duration + " ns------------");
+        return result;
+    }
 }
